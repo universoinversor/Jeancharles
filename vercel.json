@@ -1,4 +1,9 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/crypto", "destination": "/crypto.html" },
+    { "source": "/forex-landing", "destination": "/forex-landing.html" },
+    { "source": "/nipponflex", "destination": "/nipponflex.html" }
+  ]
 }
