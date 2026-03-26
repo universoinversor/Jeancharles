@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jean Charles | Crypto Terminal</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#FFD700', 'gold-dim': '#C5A000', 'cyber-green': '#00FF9D', 'cyber-blue': '#00F0FF',
+                        'deep-space': '#020617', 'void': '#000000', 'glass-border': 'rgba(255, 255, 255, 0.08)',
+                    },
+                    fontFamily: { 'manrope': ['Manrope', 'sans-serif'], 'inter': ['Inter', 'sans-serif'], 'mono': ['Space Mono', 'monospace'], },
+                    backgroundImage: { 'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)", }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --cursor-x: 50%;
+            --cursor-y: 50%;
+        }
+
+        * {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        body {
+            background-color: #020617;
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0, 255, 157, 0.05) 0%, transparent 40%);
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.1;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF5C2 0%, #FFD700 50%, #C5A000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .cyber-gradient-text {
+            background: linear-gradient(135deg, #00F0FF 0%, #00FF9D 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 157, 0.5));
+        }
+
+        .glass-card {
+            background: rgba(2, 6, 23, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card-hover:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.15), inset 0 0 20px rgba(255, 215, 0, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .orb-gold {
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+        }
+
+        .orb-green {
+            background: radial-gradient(circle, rgba(0, 255, 157, 0.3) 0%, transparent 70%);
+        }
+
+        .orb-blue {
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, transparent 70%);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: blur(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .stagger-item {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .stagger-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse-neon {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        .pulse-gold {
+            animation: pulse-neon 2s ease-in-out infinite;
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #00F0FF;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes ticker-slide {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-ticker {
+            animation: ticker-slide 30s linear infinite;
+        }
+
+        .animate-spin-reverse-slow {
+            animation: spin-reverse 20s linear infinite;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+        }
+
+        .calc-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(2, 6, 23, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 1rem;
+            z-index: 100;
+            min-width: 320px;
+            box-shadow: 0 0 50px rgba(0, 255, 157, 0.1);
+            display: none;
+        }
+
+        .calc-modal.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -48%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+
+<body class="text-white" x-data="{ mobileMenu: false }">
+    <!-- LIVE TICKER (Existing) -->
+    <div class="fixed top-0 w-full bg-black/90 border-b border-white/5 z-50 h-8 flex items-center overflow-hidden">
+        <div id="ticker-content-static"
+            class="flex gap-8 px-4 animate-ticker text-xs font-mono text-gray-400 whitespace-nowrap">
+            <!-- Content filled by JS -->
+            <span class="text-cyber-green">BTC $64,230 (+2.4%)</span> <span>ETH $3,450 (+1.8%)</span> <span
+                class="text-cyber-green">SOL $145 (+5.1%)</span>
+            <span>BNB $590 (+0.5%)</span> <span class="text-red-500">XRP $0.62 (-0.5%)</span> <span
+                class="text-red-500">ADA $0.45 (-1.2%)</span>
+            <span class="text-cyber-green">BTC $64,230 (+2.4%)</span> <span>ETH $3,450 (+1.8%)</span> <span
+                class="text-cyber-green">SOL $145 (+5.1%)</span>
+            <span>BNB $590 (+0.5%)</span> <span class="text-red-500">XRP $0.62 (-0.5%)</span> <span
+                class="text-red-500">ADA $0.45 (-1.2%)</span>
+        </div>
+    </div>
+    <!-- BREAKING NEWS TICKER (New - Moved to Bottom) -->
+    <div
+        class="fixed bottom-0 left-0 w-full bg-cyber-green/10 border-t border-cyber-green/20 z-[60] h-8 flex items-center overflow-hidden backdrop-blur-sm">
+        <div class="flex items-center px-4 bg-cyber-green text-black font-bold text-xs h-full z-10 shrink-0">BREAKING //
+        </div>
+        <div class="marquee-container w-full h-full flex items-center">
+            <div class="marquee-content flex gap-12 px-4 text-xs font-mono text-cyber-green tracking-wide">
+                <span>INSTITUTIONAL INFLOWS REACH ALL-TIME HIGH ($4.2B)</span>
+                <span>•</span>
+                <span>JEAN CHARLES ELITE LAUNCHES 0% FEE TRADING</span>
+                <span>•</span>
+                <span>BITCOIN HALVING COUNTDOWN: MINERS ACCUMULATING</span>
+                <span>•</span>
+                <span>SEC APPROVES NEW DEFI REGULATORY FRAMEWORK</span>
+                <span>•</span>
+                <span>WALL STREET BANK ADOPTS JEAN CHARLES PROTOCOL</span>
+                <span>•</span>
+                <span>INSTITUTIONAL INFLOWS REACH ALL-TIME HIGH ($4.2B)</span>
+                <span>•</span>
+                <span>JEAN CHARLES ELITE LAUNCHES 0% FEE TRADING</span>
+                <span>•</span>
+                <span>BITCOIN HALVING COUNTDOWN: MINERS ACCUMULATING</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md border-b border-white/5 bg-black/40" id="global-header">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='/'">
+                <img src="assets/img/logo.png" alt="Jean Charles Logo"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-luxury-gold shadow-gold-glow">
+                <div class="flex flex-col">
+                    <span class="font-bold text-lg tracking-wider font-sans">JEAN CHARLES</span>
+                    <div class="flex items-center gap-1.5 opacity-70">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyber-green animate-pulse"></span>
+                        <span class="text-[10px] uppercase tracking-widest text-cyber-green">System Online</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="/" class="hover:text-luxury-gold transition-colors text-white/80">Inicio</a>
+                <a href="forex-landing" class="hover:text-luxury-gold transition-colors text-white/80">Forex</a>
+                <a href="crypto" class="text-trading-green border-b-2 border-trading-green pb-1 transition-all">Cripto</a>
+                <a href="nipponflex" class="hover:text-blue-400 transition-colors text-white/80">Nipponflex</a>
+                <a href="/?service=crypto#contactos" class="hover:text-luxury-gold transition-colors text-white/80">Contacto</a>
+                <button onclick="showActionToast('Iniciando protocolo de Wallet... Por favor, instala un proveedor Web3.')"
+                    class="bg-luxury-gold/10 border border-luxury-gold/50 text-luxury-gold px-6 py-2 rounded-lg hover:bg-luxury-gold hover:text-black transition-all font-bold uppercase tracking-wider">
+                    Conectar Wallet
+                </button>
+            </nav>
+            <button class="md:hidden text-white hover:text-luxury-gold transition-colors" @click="mobileMenu = !mobileMenu">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-2"
+        class="fixed top-20 left-0 right-0 z-40 glass-card mx-6 rounded-xl p-6 md:hidden" style="display: none;">
+        <nav class="flex flex-col gap-4 text-center font-medium text-sm">
+            <a href="/" class="p-2 hover:text-luxury-gold transition-colors" @click="mobileMenu = false">Inicio</a>
+            <a href="forex-landing" class="p-2 hover:text-luxury-gold transition-colors" @click="mobileMenu = false">Forex</a>
+            <a href="crypto" class="p-2 text-trading-green font-bold transition-colors" @click="mobileMenu = false">Cripto</a>
+            <a href="nipponflex" class="p-2 hover:text-blue-400 transition-colors" @click="mobileMenu = false">Nipponflex</a>
+            <a href="/?service=crypto#contactos" class="p-2 hover:text-luxury-gold transition-colors" @click="mobileMenu = false">Contacto</a>
+            <button onclick="showActionToast('Iniciando protocolo de Wallet... Por favor, instala un proveedor Web3.'); mobileMenu = false" 
+                class="mt-4 bg-luxury-gold text-black px-6 py-3 rounded-lg font-bold shadow-gold-glow uppercase tracking-wider">
+                Conectar Wallet
+            </button>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <section class="relative min-h-screen flex flex-col pt-32 px-6 z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="text-center mb-12 stagger-item">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyber-green/30 bg-cyber-green/5 backdrop-blur-sm mb-4">
+                    <span class="w-2 h-2 rounded-full bg-cyber-green animate-pulse"></span>
+                    <span class="text-cyber-green text-xs font-mono font-bold tracking-widest uppercase">LIVE FEED //
+                        COINGECKO_API_V3</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+                    <span class="glitch-hover" data-text="CRYPTO_TERMINAL">CRYPTO_TERMINAL</span>
+                </h1>
+                <p class="text-gray-400 font-mono text-sm max-w-2xl mx-auto">
+                    > ACCESSING DECENTRALIZED LIQUIDITY POOLS<br>> REAL-TIME SENTIMENT ANALYSIS
+                </p>
+                <button onclick="toggleChart()"
+                    class="mt-8 group relative px-8 py-3 bg-transparent overflow-hidden rounded-xl border border-gold/50 text-gold font-bold hover:shadow-[0_0_20px_rgba(255,215,0,0.4)] transition-all">
+                    <span class="relative z-10 flex items-center gap-2">Abrir Terminal Gráfica</span>
+                </button>
+            </div>
+
+            <!-- TradingView Widget -->
+            <div id="chart-container"
+                class="hidden transition-all duration-500 ease-in-out glass-card border border-white/10 rounded-2xl p-1 h-[600px] w-full mb-12 relative overflow-hidden stagger-item">
+                <div class="absolute top-4 right-4 z-20">
+                    <button onclick="toggleChart()"
+                        class="bg-black/50 hover:bg-black/80 text-white rounded-full p-2 transition-colors">X</button>
+                </div>
+                <div id="tradingview_widget" class="w-full h-full"></div>
+            </div>
+
+            <!-- RESTORED: Fear & Greed + AI Analyst -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 stagger-item">
+                <!-- Fear & Greed Gauge -->
+                <div
+                    class="glass-card rounded-2xl p-8 border border-white/10 relative overflow-hidden flex flex-col items-center justify-center group hover:border-cyber-green/30 transition-colors">
+                    <div
+                        class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-500/10 to-transparent opacity-50 pointer-events-none">
+                    </div>
+                    <h3 class="text-xl font-bold font-mono mb-2 text-white relative z-10 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span>
+                        SENTIMENT_SCAN
+                    </h3>
+                    <div class="relative w-64 h-32 mt-4 mb-2">
+                        <svg viewBox="0 0 200 100" class="w-full h-full">
+                            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)"
+                                stroke-width="12" stroke-linecap="round" />
+                            <defs>
+                                <linearGradient id="gauge-gradient">
+                                    <stop offset="0%" stop-color="#EF4444" />
+                                    <stop offset="50%" stop-color="#F59E0B" />
+                                    <stop offset="100%" stop-color="#10B981" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gauge-gradient)"
+                                stroke-width="12" stroke-linecap="round" />
+                        </svg>
+                        <div id="gauge-needle"
+                            class="absolute bottom-0 left-1/2 w-1 h-[85%] bg-white origin-bottom transition-transform duration-1000 ease-out z-10"
+                            style="transform: rotate(-90deg); margin-left: -0.5px;"></div>
+                        <div
+                            class="absolute bottom-0 left-1/2 w-4 h-4 bg-gray-900 rounded-full border-2 border-white -translate-x-1/2 translate-y-1/2 z-20">
+                        </div>
+                    </div>
+                    <div class="text-center z-10 mt-2">
+                        <div id="fng-value-display"
+                            class="text-6xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                            72</div>
+                        <div id="fng-text-display"
+                            class="text-lg font-mono tracking-widest uppercase text-cyber-green font-bold">GREED</div>
+                    </div>
+                </div>
+
+                <!-- AI ANALYST TERMINAL -->
+                <div
+                    class="lg:col-span-2 glass-card p-6 rounded-xl border border-cyber-green/20 relative overflow-hidden flex flex-col">
+                    <div class="absolute inset-0 bg-cyber-green/5"></div>
+                    <div class="flex justify-between items-center mb-4 border-b border-white/5 pb-2 relative z-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-cyber-green animate-pulse"></div>
+                            <h3 class="font-mono font-bold text-cyber-green tracking-widest">AI_MARKET_ANALYST // V.9.0
+                            </h3>
+                        </div>
+                        <div class="flex gap-1">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                    </div>
+                    <div class="font-mono text-sm space-y-3 relative z-10 h-64 overflow-hidden" id="ai-terminal-output">
+                        <div class="text-gray-500">> INITIALIZING NEURAL NETWORKS... <span
+                                class="text-cyber-green">OK</span></div>
+                        <div class="text-gray-500">> CONNECTING TO BLOCKCHAIN NODES... <span
+                                class="text-cyber-green">CONNECTED</span></div>
+                        <div class="text-gray-400">> ANALYZING VOLUME PATTERNS [BTC, ETH, SOL]</div>
+                        <div class="text-white">> ALERT: HEAVY ACCUMULATION DETECTED ON <span
+                                class="text-yellow-400">SOLANA</span> WALLETS.</div>
+                        <div class="text-white">> BITCOIN RESISTANCE AT $68,500. BREAKOUT PROBABILITY: <span
+                                class="text-cyber-green">78%</span></div>
+                        <div class="text-cyber-blue animate-pulse">> WAITING FOR NEW DATA BLOCKS...</div>
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-b from-transparent via-cyber-green/5 to-transparent h-4 animate-scanline pointer-events-none">
+                    </div>
+                </div>
+            </div>
+            <!-- Live Market Table -->
+            <div class="glass-card rounded-2xl p-6 border border-white/10 mb-24 stagger-item overflow-x-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold font-mono text-white">MARKET_SCREENER // LIVE_FEED</h3>
+                    <div class="flex gap-2"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span><span
+                            class="text-[10px] text-gray-400 font-mono uppercase">STREAMING</span></div>
+                </div>
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="text-xs uppercase text-gray-500 font-mono border-b border-white/5">
+                            <th class="py-4 px-2">Asset</th>
+                            <th class="py-4 px-2 text-right">Price</th>
+                            <th class="py-4 px-2 text-right">24H %</th>
+                            <th class="py-4 px-2 text-right">24H Vol</th>
+                            <th class="py-4 px-2 text-right">Mkt Cap</th>
+                            <th class="py-4 px-2 text-right">Signal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="market-table-body" class="text-sm font-mono divide-y divide-white/5">
+                        <tr>
+                            <td colspan="6" class="py-8 text-center text-gray-500 animate-pulse">> INITIALIZING DATA
+                                UPLINK...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ELITE CRYPTO CARD (RedotPay Features / JC Branded) -->
+    <section class="relative py-24 px-6 border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-cyber-green/5"></div>
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+
+            <!-- LEFT COLUMN: THE CARD VISUAL -->
+            <div class="order-1 group perspective-1000 relative">
+                <div
+                    class="absolute -inset-4 bg-gradient-to-r from-gold/20 to-cyber-green/20 rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-700">
+                </div>
+                <div
+                    class="w-full max-w-md mx-auto aspect-[1.586/1] rounded-3xl bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a] border border-white/10 relative overflow-hidden shadow-2xl transform transition-transform duration-700 group-hover:rotate-y-6 group-hover:scale-105">
+                    <!-- Card Background Pattern -->
+                    <div
+                        class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30">
+                    </div>
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-gold/10 rounded-full blur-[60px]"></div>
+                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-cyber-green/10 rounded-full blur-[60px]">
+                    </div>
+
+                    <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                        <!-- Card Header -->
+                        <div class="flex justify-between items-start">
+                            <img src="assets/img/logo.png" alt="JC Logo"
+                                class="w-12 h-12 object-contain drop-shadow-[0_0_10px_rgba(255,215,0,0.5)]">
+                            <div class="text-right">
+                                <div class="text-white/90 font-bold tracking-widest text-lg">ELITE</div>
+                                <div class="text-[10px] text-cyber-green font-mono uppercase tracking-[0.2em]">
+                                    WORLD_ACCESS</div>
+                            </div>
+                        </div>
+                        <!-- Chip & Contactless -->
+                        <div class="flex items-center gap-4 pl-1">
+                            <div
+                                class="w-12 h-9 rounded bg-gradient-to-br from-yellow-200 to-yellow-500 shadow-inner flex items-center justify-center border border-yellow-600/50">
+                                <div class="w-8 h-5 border border-black/20 rounded-sm"></div>
+                            </div>
+                            <svg class="w-8 h-8 text-white/50" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-5.5l1.5-1.5c.96.96 1.48 1.63 1.93 2.5h2.14c-.65-1.39-1.42-2.31-2.57-3.47L12 12.55V8h-2v1.5l-2-2L6.5 9l5.5 5.5L14 12.5z" />
+                            </svg>
+                        </div>
+                        <!-- Card Number & Holder -->
+                        <div>
+                            <div
+                                class="text-xl md:text-2xl tracking-[0.1em] font-mono text-white/90 mb-4 shadow-black drop-shadow-md">
+                                •••• •••• •••• 4829</div>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <div class="text-[8px] text-gray-400 font-mono uppercase mb-0.5">CARDHOLDER NAME
+                                    </div>
+                                    <div class="text-white font-mono tracking-widest text-sm">JEAN CHARLES</div>
+                                </div>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png"
+                                    class="h-8 opacity-90" alt="Mastercard">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Holo Effect -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-out pointer-events-none">
+                    </div>
+                </div>
+                <!-- Floating Elements -->
+                <div
+                    class="absolute -right-8 top-1/2 -translate-y-1/2 glass-card p-3 rounded-xl border border-white/10 md:flex items-center gap-3 hidden animate-float">
+                    <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-gray-400 font-mono">GLOBAL ACCESS</div>
+                        <div class="text-xs font-bold text-white">100% ACCEPTANCE</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: BENEFITS LIST -->
+            <div class="order-2 text-left">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-gold/5 backdrop-blur-sm mb-6">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                    <span class="text-gold text-xs font-mono font-bold tracking-widest uppercase">JEAN CHARLES
+                        ELITE</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold font-serif text-white mb-8">SPEND CRYPTO <br><span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">ANYWHERE,
+                        INSTANTLY</span></h2>
+
+                <div class="space-y-6">
+                    <!-- Benefit 1: Cashback -->
+                    <div class="flex gap-4 group">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-cyber-green/10 border border-cyber-green/20 flex items-center justify-center text-cyber-green group-hover:scale-110 transition-transform flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3
+                                class="text-xl font-bold text-white mb-2 group-hover:text-cyber-green transition-colors">
+                                Up to 5% Cashback</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Earn rewards on every transaction.
+                                Compatible with RedotPay reward vouchers and exclusive Jean Charles referral bonuses.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Benefit 2: Instant Conversion -->
+                    <div class="flex gap-4 group">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                                Instant Crypto-to-Fiat</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">No pre-loading required. Keep your assets
+                                in USDT/USDC and convert only at the moment of purchase. Pay directly from your DeFi
+                                wallet.</p>
+                        </div>
+                    </div>
+
+                    <!-- Benefit 3: Global Acceptance -->
+                    <div class="flex gap-4 group">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+                                Worldwide Acceptance</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Accepted at 100M+ merchants globally. High
+                                limits: Spend up to $100k/transaction and withdraw cash at ATMs worldwide.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                    <a href="https://crypto.com/app/3q56ja4556" target="_blank"
+                        class="bg-gold text-black px-8 py-4 rounded-xl font-bold font-mono hover:bg-gold-dim transition-all shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.6)] flex items-center justify-center gap-2">
+                        <span>APPLY_NOW //</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        </svg>
+                    </a>
+                    <button
+                        onclick="showActionToast('0% Fees on Spot. Withdraw limits unlock linearly with account tier.')"
+                        class="px-8 py-4 rounded-xl font-bold font-mono border border-white/10 hover:bg-white/10 hover:text-white transition-all text-gray-300">VIEW_FEES_&_LIMITS</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: ELITE COMPARISON TABLE -->
+    <section class="relative py-24 px-6 bg-black/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold font-serif text-white mb-4">WHY CHOOSE <span
+                        class="text-cyber-green">ELITE</span>?</h2>
+                <p class="text-gray-400 font-mono">See how we stack up against the competition.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+                <!-- Traditional Banks -->
+                <div
+                    class="glass-card p-8 rounded-2xl border border-white/5 opacity-80 hover:opacity-100 transition-opacity">
+                    <h3 class="text-xl font-bold text-gray-300 mb-6 text-center">TRADITIONAL BANKS</h3>
+                    <ul class="space-y-4 font-mono text-sm text-gray-400">
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Fees</span> <span
+                                class="text-red-500">High (1-3%)</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Speed</span> <span
+                                class="text-red-500">3-5 Days</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Support</span> <span
+                                class="text-red-500">9-to-5 Only</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Rewards</span> <span
+                                class="text-red-500">
+                                < 0.1%</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Privacy</span> <span
+                                class="text-red-500">Low</span></li>
+                    </ul>
+                </div>
+
+                <!-- Jean Charles Elite (Highlighted) -->
+                <div class="relative z-20 transform scale-105 origin-center">
+                    <!-- Badge (Outside overflow-hidden) -->
+                    <div
+                        class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gold text-black px-4 py-1 rounded-full text-xs font-bold shadow-lg z-30 whitespace-nowrap">
+                        RECOMMENDED</div>
+
+                    <!-- Card Content (With glass effect and overflow hidden for shine) -->
+                    <div
+                        class="glass-card p-8 rounded-2xl border border-gold/50 shadow-[0_0_50px_rgba(255,215,0,0.1)] bg-black/80 h-full">
+                        <div class="absolute inset-0 bg-gold/5 animate-pulse pointer-events-none"></div>
+                        <h3 class="text-2xl font-bold text-gold mb-8 text-center tracking-widest">JEAN CHARLES ELITE
+                        </h3>
+                        <ul class="space-y-6 font-mono text-sm text-white">
+                            <li class="flex justify-between border-b border-gold/20 pb-2"><span>Fees</span> <span
+                                    class="text-cyber-green font-bold">0% / Low</span></li>
+                            <li class="flex justify-between border-b border-gold/20 pb-2"><span>Speed</span> <span
+                                    class="text-cyber-green font-bold">INSTANT</span></li>
+                            <li class="flex justify-between border-b border-gold/20 pb-2"><span>Support</span> <span
+                                    class="text-cyber-green font-bold">24/7 CONCIERGE</span></li>
+                            <li class="flex justify-between border-b border-gold/20 pb-2"><span>Rewards</span> <span
+                                    class="text-cyber-green font-bold">UP TO 5%</span></li>
+                            <li class="flex justify-between border-b border-gold/20 pb-2"><span>AI Analysis</span> <span
+                                    class="text-cyber-green font-bold">INCLUDED</span></li>
+                        </ul>
+                        <a href="https://crypto.com/app/3q56ja4556" target="_blank"
+                            class="block text-center w-full mt-8 bg-gold text-black font-bold py-3 rounded-xl hover:bg-gold-dim transition-all shadow-lg relative z-10">JOIN
+                            ELITE LEAGUE</a>
+                    </div>
+                </div>
+
+                <!-- Standard Exchange -->
+                <div
+                    class="glass-card p-8 rounded-2xl border border-white/5 opacity-70 hover:opacity-100 transition-opacity">
+                    <h3 class="text-xl font-bold text-white mb-6 text-center">STANDARD EXCHANGE</h3>
+                    <ul class="space-y-4 font-mono text-sm text-gray-400">
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Fees</span> <span
+                                class="text-yellow-500">Variable</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Speed</span> <span
+                                class="text-yellow-500">Minutes</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Support</span> <span
+                                class="text-yellow-500">Ticket System</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Rewards</span> <span
+                                class="text-yellow-500">Staking Only</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span>Tools</span> <span
+                                class="text-yellow-500">Basic Charts</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="relative py-24 px-6 bg-deep-space/50 overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-serif text-white mb-4">DECODING THE <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-green to-emerald-400">BLOCKCHAIN</span>
+                </h2>
+                <p class="text-gray-300 font-mono max-w-2xl mx-auto">Understanding the digital assets powering the
+                    future economy.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div
+                    class="glass-card p-8 rounded-2xl border border-white/5 hover:border-cyber-green/50 transition-all group">
+                    <h3 class="text-xl font-bold text-white mb-4 font-mono">Store of Value</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Digital gold. Assets designed to hold wealth over
+                        time.</p>
+                </div>
+                <div
+                    class="glass-card p-8 rounded-2xl border border-white/5 hover:border-cyber-green/50 transition-all group">
+                    <h3 class="text-xl font-bold text-white mb-4 font-mono">Utilities & Gas</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">The fuel of the network. Tokens required to execute
+                        smart contracts.</p>
+                </div>
+                <div
+                    class="glass-card p-8 rounded-2xl border border-white/5 hover:border-cyber-green/50 transition-all group">
+                    <h3 class="text-xl font-bold text-white mb-4 font-mono">Governance</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Power to the people. Voting rights on protocol
+                        upgrades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: VISUAL ROADMAP (PATH TO SUCCESS) -->
+    <section class="relative py-24 px-6 border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5">
+        </div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold font-serif text-white mb-4">YOUR PATH TO <span
+                        class="text-gold">FREEDOM</span></h2>
+                <p class="text-gray-300 font-mono">From beginner to elite investor in 4 steps.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-white/10 -translate-x-1/2"></div>
+                <div
+                    class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-cyber-green to-transparent -translate-x-1/2 opacity-50 blur-sm">
+                </div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 group">
+                    <div class="md:w-5/12 text-left md:text-right order-2 md:order-1 pl-12 md:pl-0">
+                        <h3 class="text-xl font-bold text-white mb-2">1. INITIATION</h3>
+                        <p class="text-gray-400 text-sm">Create your account and secure your spot in the Elite network.
+                            Access the basic dashboard.</p>
+                    </div>
+                    <div
+                        class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-black border-2 border-white/20 group-hover:border-cyber-green group-hover:scale-125 transition-all z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-3 h-3 rounded-full bg-white/20 group-hover:bg-cyber-green transition-colors">
+                        </div>
+                    </div>
+                    <div class="md:w-5/12 order-3 pl-12 md:pl-0"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 group">
+                    <div class="md:w-5/12 order-2 md:order-1"></div>
+                    <div
+                        class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-black border-2 border-white/20 group-hover:border-cyber-green group-hover:scale-125 transition-all z-10 flex items-center justify-center order-1 md:order-2">
+                        <div class="w-3 h-3 rounded-full bg-white/20 group-hover:bg-cyber-green transition-colors">
+                        </div>
+                    </div>
+                    <div class="md:w-5/12 text-left order-3 md:order-3 pl-12 md:pl-0">
+                        <h3 class="text-xl font-bold text-white mb-2">2. FIRST DEPOSIT</h3>
+                        <p class="text-gray-400 text-sm">Fund your account using the Elite Card or crypto transfer.
+                            Instant processing with 0% fees.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between mb-16 group">
+                    <div class="md:w-5/12 text-left md:text-right order-2 md:order-1 pl-12 md:pl-0">
+                        <h3 class="text-xl font-bold text-gold mb-2">3. ACTIVATE AI</h3>
+                        <p class="text-gray-400 text-sm">Enable the AI Analyst to automated market scanning. Receive
+                            real-time "Strong Buy" signals.</p>
+                    </div>
+                    <div
+                        class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-black border-2 border-gold/50 group-hover:border-gold group-hover:scale-125 transition-all z-10 flex items-center justify-center order-1 md:order-2 shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+                        <div class="w-3 h-3 rounded-full bg-gold animate-pulse"></div>
+                    </div>
+                    <div class="md:w-5/12 order-3 pl-12 md:pl-0"></div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                    <div class="md:w-5/12 order-2 md:order-1"></div>
+                    <div
+                        class="absolute left-4 md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-black border-2 border-cyber-green shadow-[0_0_20px_rgba(0,255,157,0.4)] z-10 flex items-center justify-center order-1 md:order-2">
+                        <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="md:w-5/12 text-left order-3 md:order-3 pl-12 md:pl-0">
+                        <h3 class="text-xl font-bold text-cyber-green mb-2">4. FINANCIAL FREEDOM</h3>
+                        <p class="text-gray-400 text-sm">Withdraw profits to your local bank or spend directly with the
+                            Elite Card. You made it.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="relative py-24 px-6 border-t border-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+            <div class="md:w-1/2">
+                <div
+                    class="glass-card p-1 rounded-2xl border border-cyber-green/30 shadow-[0_0_50px_rgba(0,255,157,0.1)] rotate-3 hover:rotate-0 transition-transform duration-500">
+                    <div class="bg-black/80 rounded-xl p-6">
+                        <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+                            <span class="text-gray-400 font-mono text-xs">PORTFOLIO_ANALYSIS // SOL_STRATEGY</span>
+                            <span class="text-cyber-green font-bold">+524.8%</span>
+                        </div>
+                        <div class="h-48 flex items-end gap-2 mb-6 px-2">
+                            <div class="w-1/6 bg-cyber-green/20 h-[20%] rounded-t-sm animate-pulse"></div>
+                            <div class="w-1/6 bg-cyber-green/30 h-[35%] rounded-t-sm animate-pulse"
+                                style="animation-delay: 0.1s"></div>
+                            <div class="w-1/6 bg-cyber-green h-[100%] rounded-t-sm animate-pulse shadow-[0_0_20px_rgba(0,255,157,0.5)]"
+                                style="animation-delay: 0.5s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-5xl font-bold font-serif text-white mb-6">PROVEN <span
+                        class="text-cyber-green">RESULTS</span></h2>
+                <div class="flex gap-8">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-white">92%</div>
+                        <div class="text-[10px] text-gray-500 font-mono tracking-widest uppercase">Win Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: THE VAULT (SECURITY & TRUST) -->
+    <section class="relative py-32 px-6 border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-deep-space"></div>
+        <!-- Hexagon Grid Background -->
+        <div class="absolute inset-0 opacity-10"
+            style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0l25.98 15v30L30 60 4.02 45V15z\' fill-opacity=\'0.1\' fill=\'%2300FF9D\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');">
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Left: Text Content -->
+            <div>
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyber-green/30 bg-cyber-green/5 backdrop-blur-sm mb-6">
+                    <svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                        </path>
+                    </svg>
+                    <span class="text-cyber-green text-xs font-mono font-bold tracking-widest uppercase">BANK-GRADE
+                        SECURITY</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold font-serif text-white mb-6">THE <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">VAULT</span>
+                    ARCHITECTURE</h2>
+                <p class="text-gray-300 font-mono text-lg mb-10 leading-relaxed">Your assets are protected by a
+                    military-grade security infrastructure. We employ a multi-layered defense system combining cold
+                    storage, real-time AI threat detection, and insurance coverage.</p>
+
+                <div class="space-y-6">
+                    <!-- Security Feature 1 -->
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="mt-1 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-gold shadow-[0_0_15px_rgba(255,215,0,0.1)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                                </path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg">98% Cold Storage</h3>
+                            <p class="text-gray-500 text-sm">The vast majority of user funds are held offline in
+                                air-gapped multi-sig wallets, inaccessible to online threats.</p>
+                        </div>
+                    </div>
+
+                    <!-- Security Feature 2 -->
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="mt-1 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyber-green shadow-[0_0_15px_rgba(0,255,157,0.1)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg">Proof of Reserves (PoR)</h3>
+                            <p class="text-gray-500 text-sm">Verified 1:1 backing of all customer assets. Audited
+                                quarterly by top-tier accounting firms.</p>
+                        </div>
+                    </div>
+
+                    <!-- Security Feature 3 -->
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="mt-1 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-bold text-lg">$250M Insurance Fund</h3>
+                            <p class="text-gray-500 text-sm">An extra layer of protection against extreme market events
+                                or security breaches.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Visual Hologram Lock -->
+            <div class="relative flex justify-center items-center">
+                <!-- Outer Rings -->
+                <div class="absolute w-[400px] h-[400px] border border-white/5 rounded-full animate-spin-slow"></div>
+                <div
+                    class="absolute w-[350px] h-[350px] border border-dashed border-cyber-green/20 rounded-full animate-spin-reverse-slow">
+                </div>
+                <div class="absolute w-[300px] h-[300px] border border-white/10 rounded-full"></div>
+
+                <!-- Center Lock -->
+                <div
+                    class="relative z-10 glass-card w-48 h-48 rounded-3xl flex flex-col items-center justify-center border-cyber-green/30 shadow-[0_0_60px_rgba(0,255,157,0.15)] group hover:scale-105 transition-transform duration-500">
+                    <svg class="w-20 h-20 text-cyber-green mb-2 drop-shadow-[0_0_10px_rgba(0,255,157,0.5)]" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                        </path>
+                    </svg>
+                    <div class="text-white font-bold font-mono text-lg tracking-widest">SECURE</div>
+                    <div class="text-[10px] text-cyber-green font-mono uppercase animate-pulse">SYSTEM_ACTIVE</div>
+                </div>
+
+                <!-- Floating Code Particles -->
+                <div
+                    class="absolute top-10 right-10 p-2 bg-black/60 backdrop-blur rounded border border-white/10 text-[10px] font-mono text-gray-400 animate-float opacity-70">
+                    <div>HASH: 0x7f...a92b</div>
+                    <div class="text-cyber-green">VERIFIED</div>
+                </div>
+                <div class="absolute bottom-10 left-10 p-2 bg-black/60 backdrop-blur rounded border border-white/10 text-[10px] font-mono text-gray-400 animate-float opacity-70"
+                    style="animation-delay: 2s;">
+                    <div>ENCRYPTION: AES-256</div>
+                    <div class="text-gold">ACTIVE</div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: STAKING CALCULATOR (PASSIVE INCOME) -->
+    <section class="relative py-24 px-6 border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="text-center mb-12">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-gold/5 backdrop-blur-sm mb-6">
+                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    <span class="text-gold text-xs font-mono font-bold tracking-widest uppercase">PASSIVE INCOME
+                        GENERATOR</span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-bold font-serif text-white mb-4">MAKE YOUR MONEY <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200">WORK FOR
+                        YOU</span></h2>
+                <p class="text-gray-300 font-mono">Calculate your potential earnings with our high-yield staking pools.
+                </p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Inputs -->
+                    <div class="space-y-8">
+                        <div>
+                            <div class="flex justify-between text-sm font-mono text-gray-400 mb-2">
+                                <span>INITIAL INVESTMENT</span>
+                                <span class="text-white" id="stake-amount-display">$10,000</span>
+                            </div>
+                            <input type="range" min="1000" max="100000" step="1000" value="10000" id="stake-amount"
+                                class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-gold">
+                            <div class="flex justify-between text-xs text-gray-600 mt-2 font-mono">
+                                <span>$1K</span>
+                                <span>$100K</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm font-mono text-gray-400 mb-2">
+                                <span>LOCK DURATION</span>
+                                <span class="text-white" id="stake-duration-display">12 MONTHS</span>
+                            </div>
+                            <input type="range" min="1" max="24" step="1" value="12" id="stake-duration"
+                                class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyber-green">
+                            <div class="flex justify-between text-xs text-gray-600 mt-2 font-mono">
+                                <span>1 M</span>
+                                <span>24 M</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-white/5 rounded-xl border border-white/5">
+                            <div class="text-xs text-gray-500 font-mono mb-1">CURRENT APY (USDT/USDC)</div>
+                            <div class="text-2xl font-bold text-cyber-green">12.5% <span
+                                    class="text-xs text-gray-400 font-normal">Fixed</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Outputs -->
+                    <div
+                        class="bg-black/40 rounded-2xl p-8 border border-white/5 flex flex-col justify-center relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-gold/10 rounded-full blur-3xl"></div>
+                        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-cyber-green/10 rounded-full blur-3xl">
+                        </div>
+
+                        <div class="relative z-10 space-y-6 text-center">
+                            <div>
+                                <div class="text-sm text-gray-400 font-mono mb-2">MONTHLY INCOME</div>
+                                <div class="text-3xl md:text-4xl font-bold text-white tracking-widest"
+                                    id="stake-monthly">$104.16</div>
+                            </div>
+                            <div class="w-full h-px bg-white/10"></div>
+                            <div>
+                                <div class="text-sm text-gold font-mono mb-2">TOTAL PROFIT</div>
+                                <div class="text-4xl md:text-5xl font-bold text-gold tracking-widest drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]"
+                                    id="stake-total">$1,250.00</div>
+                            </div>
+                            <button onclick="showActionToast('Deploying assets to staking pool smart contract...')"
+                                class="w-full bg-cyber-green text-black font-bold font-mono py-3 rounded-lg hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] hover:bg-emerald-400 transition-all mt-4">START
+                                STAKING NOW</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-gray-400 mt-6 font-mono">* Rates are subject to market conditions. Past
+                performance does not guarantee future results.</p>
+        </div>
+    </section>
+
+    <!-- NOTIFICATION TOAST CONTAINER -->
+    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-4 pointer-events-none"></div>
+
+    <!-- Footer -->
+    <footer class="relative border-t border-cyber-green/20 py-12 px-6 bg-black/80 backdrop-blur-md z-40 pb-20 md:pb-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                <span class="font-bold text-xl tracking-wider font-mono text-white">JEAN_CHARLES <span class="text-gold">CRYPTO</span></span>
+                <p class="text-[10px] text-gray-600 mt-2">© 2026 Jean Charles Elite Investment Management.</p>
+            </div>
+            <div class="flex gap-6 text-gray-500 font-mono text-sm">
+                <a href="index.html" class="hover:text-white transition-colors">MAIN</a>
+                <a href="forex-landing.html" class="hover:text-white transition-colors">FOREX</a>
+                <a href="nipponflex.html" class="hover:text-white transition-colors">NIPPONFLEX</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // TradingView
+        let tvWidgetInitialized = false;
+        function toggleChart() {
+            const container = document.getElementById('chart-container');
+            container.classList.toggle('hidden');
+            if (!container.classList.contains('hidden') && !tvWidgetInitialized) {
+                initTradingViewWidget();
+                tvWidgetInitialized = true;
+            }
+        }
+        function initTradingViewWidget() {
+            const script = document.createElement('script');
+            script.src = 'https://s3.tradingview.com/tv.js';
+            script.async = true;
+            script.onload = () => {
+                new TradingView.widget({ "autosize": true, "symbol": "BINANCE:BTCUSDT", "interval": "D", "timezone": "Etc/UTC", "theme": "dark", "style": "1", "locale": "en", "enable_publishing": false, "backgroundColor": "rgba(2, 6, 23, 1)", "gridColor": "rgba(255, 255, 255, 0.05)", "hide_top_toolbar": false, "hide_volume": true, "container_id": "tradingview_widget" });
+            };
+            document.head.appendChild(script);
+        }
+
+        // Configuration & Data
+        let cryptoLiveData = {
+            bitcoin: { usd: 64230.50, usd_24h_change: 2.45, usd_24h_vol: 35000000000, usd_market_cap: 1200000000000 },
+            ethereum: { usd: 3450.12, usd_24h_change: 1.82, usd_24h_vol: 15000000000, usd_market_cap: 400000000000 },
+            solana: { usd: 145.60, usd_24h_change: 5.10, usd_24h_vol: 4000000000, usd_market_cap: 65000000000 },
+            binancecoin: { usd: 590.22, usd_24h_change: 0.55, usd_24h_vol: 1000000000, usd_market_cap: 87000000000 },
+            ripple: { usd: 0.6234, usd_24h_change: -0.51, usd_24h_vol: 800000000, usd_market_cap: 34000000000 },
+            cardano: { usd: 0.4512, usd_24h_change: -1.23, usd_24h_vol: 400000000, usd_market_cap: 16000000000 },
+            'avalanche-2': { usd: 35.20, usd_24h_change: 4.21, usd_24h_vol: 500000000, usd_market_cap: 13000000000 },
+            dogecoin: { usd: 0.1643, usd_24h_change: 8.54, usd_24h_vol: 2000000000, usd_market_cap: 23000000000 },
+            polkadot: { usd: 7.201, usd_24h_change: -2.12, usd_24h_vol: 200000000, usd_market_cap: 10000000000 },
+            chainlink: { usd: 14.502, usd_24h_change: 1.55, usd_24h_vol: 300000000, usd_market_cap: 8500000000 }
+        };
+
+        // NEW: Live Data Fetching
+        async function fetchCryptoData() {
+            try {
+                const coins = Object.keys(cryptoLiveData).join(',');
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coins}&vs_currencies=usd&include_24hr_change=true&include_24hr_vol=true&include_market_cap=true`);
+                if (!response.ok) throw new Error('API Limit or Error');
+                const data = await response.json();
+
+                // Merge data
+                Object.keys(data).forEach(key => {
+                    if (cryptoLiveData[key]) {
+                        cryptoLiveData[key] = data[key];
+                    }
+                });
+                console.log('>>> LIVE DATA UPDATED');
+                simpleUpdateTable();
+                updateTicker();
+            } catch (e) {
+                console.warn('>>> USING OFFLINE/FALLBACK DATA:', e);
+            }
+        }
+
+        function simpleDashboardInit() {
+            console.log('>>> CRYPTO DASHBOARD ONLINE');
+            simpleUpdateTable();
+            simpleUpdateFearGreed();
+
+            // Initial Fetch
+            fetchCryptoData();
+
+            // Periodic Updates (Every 60s to avoid rate limits)
+            setInterval(fetchCryptoData, 60000);
+
+            if (typeof initAIAnalyst === 'function') initAIAnalyst();
+
+            // Visual Animation Loop (Interim updates)
+            setInterval(() => {
+                for (let key in cryptoLiveData) {
+                    // Add tiny noise for "live" feel between API updates
+                    const move = (Math.random() - 0.5) * 0.0005;
+                    cryptoLiveData[key].usd *= (1 + move);
+                }
+                simpleUpdateTable();
+                if (Math.random() > 0.6 && typeof addAILog === 'function') addAILog();
+            }, 3000);
+            updateTicker();
+            setupPortfolioCalculator();
+        }
+
+        // AI Analyst Logic
+        const aiLogs = [
+            "SCANNING MEMPOOL FOR WHALE ACTIVITY...", "ANALYZING ON-CHAIN METRICS [ETH-L2]...", "DETECTED LIQUIDITY SPIKE IN <span class='text-yellow-400'>SOL/USDT</span> POOL.",
+            "CALCULATING RSI DIVERGENCE ON BTC 4H CHART...", "SENTIMENT ANALYSIS: <span class='text-cyber-green'>BULLISH</span> MOMENTUM INCREASING.",
+            "MONITORING GAS FEES... OPTIMAL RANGE DETECTED.", "INSTITUTIONAL INFLOW DETECTED: $45M -> COINBASE.", "RESISTANCE LEVEL TESTED AT $67,200.",
+            "AI MODEL CONFIDENCE: <span class='text-cyber-green'>87.4%</span>", "EXECUTING ARBITRAGE SCAN... <span class='text-red-500'>NO OPPORTUNITIES</span>"
+        ];
+        function initAIAnalyst() { addAILog(); }
+        function addAILog() {
+            const terminal = document.getElementById('ai-terminal-output');
+            if (!terminal) return;
+            const msg = aiLogs[Math.floor(Math.random() * aiLogs.length)];
+            const div = document.createElement('div');
+            div.className = "text-gray-400 border-l-2 border-transparent pl-2 animate-fade-in font-mono text-xs md:text-sm";
+            div.innerHTML = `> ${msg} <span class="text-gray-600 ml-2">[${new Date().toLocaleTimeString()}]</span>`;
+            terminal.appendChild(div);
+            if (terminal.children.length > 6) terminal.removeChild(terminal.firstChild);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function simpleUpdateTable() {
+            const tbody = document.getElementById('market-table-body');
+            if (!tbody) return;
+            let html = '';
+            const coins = ['bitcoin', 'ethereum', 'binancecoin', 'solana', 'ripple', 'cardano', 'avalanche-2', 'dogecoin', 'polkadot', 'chainlink'];
+            coins.forEach(id => {
+                const coin = cryptoLiveData[id];
+                if (!coin) return;
+                const change = coin.usd_24h_change;
+                const isPos = change >= 0;
+                const signal = isPos ? (change > 5 ? 'STRONG BUY' : 'BUY') : (change < -5 ? 'STRONG SELL' : 'SELL');
+                const signalColor = isPos ? (change > 5 ? 'text-cyber-green' : 'text-green-400') : (change < -5 ? 'text-red-600' : 'text-red-400');
+                const name = id.charAt(0).toUpperCase() + id.slice(1).replace('-', ' ').replace('2', '');
+                const priceFmt = coin.usd < 1 ? coin.usd.toFixed(4) : coin.usd.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                html += `<tr class="hover:bg-white/5 transition-colors border-b border-white/5 group text-xs md:text-sm"><td class="py-4 px-2 font-bold text-white flex items-center gap-3"><div class="w-2 h-2 rounded-full ${isPos ? 'bg-cyber-green shadow-[0_0_8px_#00FF9D]' : 'bg-red-500 shadow-[0_0_8px_#EF4444]'}"></div>${name}</td><td class="py-4 px-2 text-right font-mono tracking-wider">$${priceFmt}</td><td class="py-4 px-2 text-right font-mono ${isPos ? 'text-cyber-green' : 'text-red-500'} font-bold">${isPos ? '▲' : '▼'} ${Math.abs(change).toFixed(2)}%</td><td class="py-4 px-2 text-right text-gray-500 font-mono">$${(coin.usd_24h_vol / 1000000).toFixed(0)}M</td><td class="py-4 px-2 text-right text-gray-500 font-mono hidden md:table-cell">$${(coin.usd_market_cap / 1000000000).toFixed(1)}B</td><td class="py-4 px-2 text-right font-bold text-[10px] ${signalColor} tracking-widest border border-white/5 rounded px-2 bg-white/5">${signal}</td></tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function simpleUpdateFearGreed() {
+            const value = 72;
+            const classification = "Greed";
+            const valEl = document.getElementById('fng-value-display'); if (valEl) valEl.innerText = value;
+            const textEl = document.getElementById('fng-text-display'); if (textEl) textEl.innerText = classification;
+            const degrees = (value / 100 * 180) - 90;
+            const needle = document.getElementById('gauge-needle'); if (needle) needle.style.transform = `rotate(${degrees}deg)`;
+        }
+
+        function updateTicker() {
+            const content = document.getElementById('ticker-content-static');
+            if (!content) return;
+            // Logic simplified for static update, real update would go here if dynamic ticker needed
+        }
+
+        // WhatsApp Calculator Logic
+        function setupPortfolioCalculator() {
+            const style = document.createElement('style');
+            style.innerHTML = `.calc-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); padding: 2rem; border-radius: 1rem; z-index: 100; min-width: 320px; box-shadow: 0 0 50px rgba(0, 255, 157, 0.1); display: none; } .calc-modal.active { display: block; animation: fadeIn 0.3s ease-out; }`;
+            document.head.appendChild(style);
+
+            // Buttons and Modal injection
+            const btn = document.createElement('button');
+            btn.className = 'fixed bottom-8 right-8 z-40 bg-cyber-green text-black font-bold p-4 rounded-full shadow-[0_0_20px_rgba(0,255,157,0.4)] hover:scale-110 transition-transform flex items-center gap-2';
+            btn.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg><span class="hidden md:inline">CALCULATOR</span>`;
+            btn.onclick = toggleCalculator;
+            document.body.appendChild(btn);
+
+            const modal = document.createElement('div');
+            modal.id = 'portfolio-calc';
+            modal.className = 'calc-modal';
+            modal.innerHTML = `<div class="flex justify-between items-center mb-6"><h3 class="text-xl font-bold font-mono text-white">ROI CALCULATOR</h3><button onclick="toggleCalculator()" class="text-gray-400 hover:text-white">✕</button></div><div class="space-y-4"><div><label class="block text-xs font-mono text-gray-500 mb-1">INVESTMENT ($)</label><input type="number" id="calc-amount" value="1000" class="w-full bg-white/5 border border-white/10 rounded p-2 text-white font-mono focus:border-cyber-green outline-none"></div><div><label class="block text-xs font-mono text-gray-500 mb-1">ASSET</label><select id="calc-asset" class="w-full bg-white/5 border border-white/10 rounded p-2 text-white font-mono outline-none"><option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option><option value="solana">Solana (SOL)</option></select></div><div><label class="block text-xs font-mono text-gray-500 mb-1">TARGET PRICE ($)</label><input type="number" id="calc-target" class="w-full bg-white/5 border border-white/10 rounded p-2 text-white font-mono focus:border-cyber-green outline-none"></div><button onclick="calculateROI()" class="w-full bg-cyber-green text-black font-bold font-mono py-2 rounded hover:bg-emerald-400 transition-colors">CALCULATE</button><div id="calc-result" class="mt-4 p-3 bg-white/5 rounded border border-white/10 text-center hidden"><div class="text-xs text-gray-500 font-mono">ESTIMATED PROFIT</div><div class="text-2xl font-bold text-cyber-green font-mono" id="calc-profit-val">--</div><a id="calc-whatsapp-btn" href="#" target="_blank" class="block w-full mt-3 bg-[#25D366] text-white font-bold font-mono py-2 rounded hover:bg-[#128C7E] transition-all flex items-center justify-center gap-2 transform hover:scale-105"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>QUIERO ESOS RESULTADOS</a></div></div>`;
+            document.body.appendChild(modal);
+            setTimeout(() => {
+                const btcPrice = cryptoLiveData.bitcoin ? cryptoLiveData.bitcoin.usd : 65000;
+                const targetInput = document.getElementById('calc-target');
+                if (targetInput) targetInput.value = (btcPrice * 1.5).toFixed(2);
+            }, 1000);
+        }
+
+        function toggleCalculator() { const modal = document.getElementById('portfolio-calc'); modal.classList.toggle('active'); }
+        window.toggleCalculator = toggleCalculator;
+
+        function calculateROI() {
+            const amountEl = document.getElementById('calc-amount');
+            const targetEl = document.getElementById('calc-target');
+            const assetEl = document.getElementById('calc-asset');
+            if (!amountEl || !targetEl || !assetEl) return;
+            const amount = parseFloat(amountEl.value);
+            const target = parseFloat(targetEl.value);
+            const assetKey = assetEl.value;
+            const currentPrice = cryptoLiveData[assetKey].usd;
+
+            const coins = amount / currentPrice;
+            const futureValue = coins * target;
+            const profit = futureValue - amount;
+            const roi = (profit / amount) * 100;
+
+            const resDiv = document.getElementById('calc-result');
+            const resVal = document.getElementById('calc-profit-val');
+            const whatsappBtn = document.getElementById('calc-whatsapp-btn');
+
+            if (resDiv && resVal) {
+                resDiv.classList.remove('hidden');
+                resDiv.style.display = 'block';
+                const profitText = `+$${profit.toLocaleString(undefined, { maximumFractionDigits: 0 })} (${roi.toFixed(1)}%)`;
+                resVal.innerText = profitText;
+
+                if (whatsappBtn) {
+                    const msg = `Hola, hice el cálculo en la web.\nInversión: $${amount.toLocaleString()}\nMoneda: ${assetKey.toUpperCase()}\nObjetivo: $${target.toLocaleString()}\nGanancia Proyectada: ${profitText}\n\n¡Quiero esos resultados!`;
+                    whatsappBtn.href = `https://wa.link/uprivg?text=${encodeURIComponent(msg)}`;
+                }
+            }
+        }
+        // Social Proof Logic
+        const toastNames = ["Alejandro M. (Madrid)", "Sofia L. (BCN)", "Carlos R. (Valencia)", "David K. (London)", "Sarah W. (Dubai)", "Miguel P. (Bogotá)", "Ana S. (CDMX)"];
+        const toastAssets = ["BTC", "ETH", "SOL", "PEPE", "XRP", "ADA", "DOGE"];
+        function showSocialProof() {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+
+            const name = toastNames[Math.floor(Math.random() * toastNames.length)];
+            const asset = toastAssets[Math.floor(Math.random() * toastAssets.length)];
+            const profit = (Math.random() * 20 + 5).toFixed(1);
+
+            const toast = document.createElement('div');
+            toast.className = "pointer-events-auto bg-black/80 border-l-4 border-cyber-green backdrop-blur-md p-4 rounded-r-lg shadow-[0_0_20px_rgba(0,255,157,0.2)] transform translate-y-10 opacity-0 transition-all duration-500 flex items-center gap-4 min-w-[280px]";
+            toast.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-cyber-green/20 flex items-center justify-center text-cyber-green">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                </div>
+                <div>
+                    <div class="text-[10px] text-gray-400 font-mono uppercase">JUST NOW // ELITE SIGNAL</div>
+                    <div class="text-sm font-bold text-white">${name} <span class="text-cyber-green">+${profit}% in ${asset}</span></div>
+                </div>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate In within next frame
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            });
+
+            // Remove after 5s
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 5000);
+        }
+
+        // Interactivity Toasts for Buttons
+        window.showActionToast = function (message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = "pointer-events-auto bg-black/90 border-l-4 border-gold backdrop-blur-md p-4 rounded-r-lg shadow-[0_0_20px_rgba(255,215,0,0.2)] transform translate-y-10 opacity-0 transition-all duration-300 flex items-center gap-4 min-w-[280px] z-[100]";
+            toast.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-gold shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <div class="text-[10px] text-gray-400 font-mono uppercase tracking-widest">SYSTEM NOTICE</div>
+                    <div class="text-xs md:text-sm font-bold text-white">${message}</div>
+                </div>
+            `;
+            container.appendChild(toast);
+            requestAnimationFrame(() => toast.classList.remove('translate-y-10', 'opacity-0'));
+            setTimeout(() => { toast.classList.add('translate-y-4', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
+        };
+
+        // Initialize Social Proof Loop
+        setTimeout(() => {
+            showSocialProof();
+            setInterval(() => {
+                if (Math.random() > 0.3) showSocialProof(); // Random interval feel
+            }, 12000);
+        }, 5000);
+
+        // Staking Calculator Logic
+        const stakeAmountEl = document.getElementById('stake-amount');
+        const stakeDurationEl = document.getElementById('stake-duration');
+        const stakeAmountDisplay = document.getElementById('stake-amount-display');
+        const stakeDurationDisplay = document.getElementById('stake-duration-display');
+        const stakeMonthlyEl = document.getElementById('stake-monthly');
+        const stakeTotalEl = document.getElementById('stake-total');
+
+        function updateStakingCalc() {
+            if (!stakeAmountEl) return;
+            const principal = parseFloat(stakeAmountEl.value);
+            const months = parseInt(stakeDurationEl.value);
+            const apy = 0.125; // 12.5%
+
+            stakeAmountDisplay.innerText = `$${principal.toLocaleString()}`;
+            stakeDurationDisplay.innerText = `${months} MONTHS`;
+
+            const monthlyRate = apy / 12;
+            const monthlyIncome = principal * monthlyRate;
+            const totalProfit = monthlyIncome * months;
+
+            stakeMonthlyEl.innerText = `$${monthlyIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            stakeTotalEl.innerText = `$${totalProfit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        }
+
+        if (stakeAmountEl && stakeDurationEl) {
+            stakeAmountEl.addEventListener('input', updateStakingCalc);
+            stakeDurationEl.addEventListener('input', updateStakingCalc);
+            updateStakingCalc(); // Init
+        }
+
+        window.calculateROI = calculateROI;
+        simpleDashboardInit();
+    </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script> AOS.init(); </script>
+    <!-- Global Footer -->
+    <footer class="relative border-t border-white/10 py-12 px-6 bg-black/80 backdrop-blur-md mt-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="assets/img/logo.png" alt="Jean Charles Logo"
+                            class="w-12 h-12 rounded-full border-2 border-luxury-gold object-cover">
+                        <span class="font-bold text-xl tracking-wider">JEAN CHARLES</span>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Coach de crecimiento personal e inversor experto en mercados financieros.
+                    </p>
+                </div>
+                <!-- Servicios -->
+                <div>
+                    <h4 class="font-bold mb-4 text-luxury-gold">Servicios</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="index.html#servicios" class="hover:text-luxury-gold transition-colors">Asesorías</a></li>
+                        <li><a href="index.html#servicios" class="hover:text-luxury-gold transition-colors">Cursos</a></li>
+                        <li><a href="index.html#servicios" class="hover:text-luxury-gold transition-colors">Conferencias</a></li>
+                        <li><a href="index.html#servicios" class="hover:text-luxury-gold transition-colors">Marketing</a></li>
+                    </ul>
+                </div>
+                <!-- Enlaces -->
+                <div>
+                    <h4 class="font-bold mb-4 text-luxury-gold">Enlaces</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="crypto.html" class="hover:text-luxury-gold transition-colors">Cripto Terminal</a></li>
+                        <li><a href="forex-landing.html" class="hover:text-luxury-gold transition-colors">Forex Dashboard</a></li>
+                        <li><a href="nipponflex.html" class="hover:text-luxury-gold transition-colors">Nipponflex Health</a></li>
+                        <li><a href="index.html" class="hover:text-luxury-gold transition-colors">Inicio</a></li>
+                        <li><a href="index.html?service=crypto#contactos" class="hover:text-luxury-gold transition-colors">Contactos</a></li>
+                    </ul>
+                </div>
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="font-bold mb-4 text-luxury-gold">Suscríbete</h4>
+                    <p class="text-sm text-gray-400 mb-4">Recibe contenido exclusivo y actualizaciones</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Tu email"
+                            class="flex-1 bg-black/40 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-luxury-gold/50 transition-all">
+                        <button type="submit"
+                            class="bg-luxury-gold text-black px-4 py-2 rounded-lg font-semibold hover:bg-luxury-gold/90 transition-all text-sm">
+                            →
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Bottom Footer -->
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600 text-center">
+                    © 2026 Jean Charles Official. Todos los derechos reservados.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://www.instagram.com/jeancharles.official/" target="_blank" class="text-gray-400 hover:text-luxury-gold transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/jeancharles.digital" target="_blank" class="text-gray-400 hover:text-luxury-gold transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function showActionToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 glass-card px-6 py-3 rounded-xl border border-luxury-gold/30 text-luxury-gold text-sm font-bold z-[10000] animate-bounce shadow-gold-glow';
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // Initialize AOS if needed, or other global scripts
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 100
+                });
+            }
+        });
+    </script>
+    <script>
+        function showActionToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 glass-card px-8 py-4 rounded-2xl border border-luxury-gold/50 text-luxury-gold text-sm font-bold z-[10000] animate-bounce shadow-gold-glow backdrop-blur-xl transition-all duration-500';
+            toast.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 500);
+            }, 3500);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+             if (typeof AOS !== 'undefined') AOS.init({ duration: 1000, once: true });
+        });
+    </script>
+</body>
+
+</html>
