@@ -794,3 +794,13 @@ dialog.modal[open] { animation: pop 0.5s var(--ease); }
     .seal__tag--a { right: 0; }
     .seal__tag--b { left: 0; }
 }
+
+/* Bodoni tiene trazos finos de menos de 1px: en pantallas de densidad normal (monitores 1x) la barra de la H
+   o el remate de la I desaparecen ("I listorias"). Un trazo mínimo los devuelve; en retina no hace falta. */
+@media (max-resolution: 1.49dppx) {
+    .display, .hero__meta dd, .marquee__item, .manifesto__quote, .stat__num, .pillar__num, .pillar h3, .service__title,
+    .step h3, .split__caption, .quote blockquote, .book__title, .yt__meta strong, .card h3, .product h3, .benefit h3,
+    .prose h2, .cinema__title, .tile-x__title, .mobile-menu nav a, .calc__big {
+        -webkit-text-stroke: 0.3px currentColor;
+    }
+}

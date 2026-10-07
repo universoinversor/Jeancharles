@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element -- imágenes remotas de catálogo */
 import Link from "next/link";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { GoldTitle, SectionHead } from "@/components/ui/Section";
 import { TradingView } from "@/components/widgets/TradingView";
 import { testimonials } from "@/content/home";
+import { OroArt } from "@/components/ui/OroArt";
 
 export const TICKER_HOME = {
   symbols: [
@@ -29,11 +29,11 @@ export function MarketStrip() {
 
 export function Performance() {
   return (
-    <section className="section" id="rendimiento" data-nav="Mercados" aria-labelledby="rendimiento-title">
+    <section className="section" id="rendimiento" data-nav="Rendimiento" aria-labelledby="rendimiento-title">
       <div className="container">
         <div className="split reveal">
           <div className="split__media">
-            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1400&q=80" alt="Entrenamiento de alto rendimiento" loading="lazy" width={1400} height={1600} />
+            <OroArt kind="bio" />
             <p className="split__caption">“Tu cuerpo es tu primer negocio.”</p>
           </div>
           <div className="split__body">

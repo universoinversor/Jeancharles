@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element -- imágenes remotas */
 import { GoldTitle, SectionHead } from "@/components/ui/Section";
 import { YouTubeLite } from "@/components/widgets/YouTubeLite";
 import { articles, videos } from "@/content/home";
+import { OroArt } from "@/components/ui/OroArt";
 
 export function Media() {
   return (
@@ -39,7 +39,7 @@ export function Journal() {
         <div className="cards">
           {articles.map((a, i) => (
             <article className="card reveal" style={{ "--d": `${i * 0.1}s` } as React.CSSProperties} key={a.title}>
-              <div className="card__media"><img src={a.img} alt={a.alt} loading="lazy" width={900} height={675} /></div>
+              <div className="card__media"><OroArt kind={a.art} /></div>
               <div className="card__body">
                 <span className="card__tag">{a.tag} · Próximamente</span>
                 <h3>{a.title}</h3>

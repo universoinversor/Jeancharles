@@ -59,12 +59,15 @@ export function CtaBand({ eyebrow, title, lead, children, id }: {
 }
 
 /** Hero de páginas internas. */
-export function PageHero({ badge, title, lead, children, center = false, id }: {
+export function PageHero({ badge, title, lead, children, center = false, id, decor }: {
   badge: ReactNode; title: ReactNode; lead: ReactNode; children?: ReactNode; center?: boolean; id: string;
+  /** Capa decorativa detrás del contenido (p. ej. monedas). */
+  decor?: ReactNode;
 }) {
   return (
     <section className="page-hero" id="arriba" data-nav="Inicio" aria-labelledby={id}>
       <div className="grid-lines" aria-hidden="true" />
+      {decor}
       <div className="glow" style={center ? { width: 640, height: 640, top: -200, left: "50%", marginLeft: -320 } : { width: 600, height: 600, top: -220, right: -140 }} aria-hidden="true" />
       <div className="container" style={{ position: "relative", zIndex: 2, ...(center ? { textAlign: "center", display: "grid", justifyItems: "center" } : {}) }}>
         <span className="badge">{badge}</span>

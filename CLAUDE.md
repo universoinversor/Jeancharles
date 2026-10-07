@@ -66,6 +66,9 @@ Next.js 16 (App Router, `src/`) · React 19 · TypeScript · Tailwind v4 · Supa
   El movimiento del fondo es la **aurora dorada** (`.aurora`, CSS puro) + `<GoldDust>`; fondo noche `--night #05050c`.
 - Estilo: lujo extravagante y MUY visual — imágenes grandes, oro con brillo, polvo de oro (`<GoldDust>`).
   Capa en `src/styles/cinematic.css` (aurora, hero, `.crest` con reflejo, `.cinema` con escudo gigante, `.universe`).
+- Capa `src/styles/lujo.css`: tarjetas de vidrio dorado, destello entre secciones (`.section--line`),
+  monedas flotantes `<Monedas set="hero|seccion|cripto">` y arte en oro `<OroArt kind="cripto|forex|bio|mente|negocios|libro">`
+  en lugar de fotos de stock. Bodoni pierde trazos finos en pantallas 1x: hay un `-webkit-text-stroke` mínimo solo ahí.
 
 ## Reglas de contenido
 
