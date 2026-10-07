@@ -1,9 +1,4 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/crypto", "destination": "/crypto.html" },
-    { "source": "/forex-landing", "destination": "/forex-landing.html" },
-    { "source": "/nipponflex", "destination": "/nipponflex.html" }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs"
 }
