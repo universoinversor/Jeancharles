@@ -10,17 +10,18 @@ import { useActiveSection } from "@/lib/use-active-section";
 
 // Como el sitio original: secciones de la home (#) y páginas propias, en el orden de lectura.
 const NAV = [
-  { href: "/#inicio", label: "Inicio" },
   { href: "/#sobre", label: "Sobre mí" },
   { href: "/#servicios", label: "Servicios" },
+  { href: "/credito", label: "Crédito" },
   { href: "/forex", label: "Forex" },
   { href: "/crypto", label: "Cripto" },
   { href: "/nipponflex", label: "Nipponflex" },
   { href: "/#journal", label: "Blog" },
   { href: "/#contacto", label: "Contacto" },
 ];
-// Solo en el menú móvil (en escritorio viven en el pie y en "Universo JC").
+// Solo en el menú móvil (en escritorio: el logo lleva al inicio; Cursos y Miembros viven en el pie).
 const NAV_MOVIL_EXTRA = [
+  { href: "/#inicio", label: "Inicio" },
   { href: "/cursos", label: "Cursos" },
   { href: "/miembros", label: "Miembros" },
 ];
