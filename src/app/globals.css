@@ -1,0 +1,68 @@
+/* Tailwind v4 + sistema de marca.
+   brand.css va dentro de la capa `components`: así las utilidades de Tailwind
+   (capa `utilities`, posterior) siempre pueden ajustar una clase de marca. */
+@import "tailwindcss";
+@import "../styles/brand.css" layer(components);
+@import "../styles/cinematic.css" layer(components);
+
+/* El padding de la itálica dorada puede asomar 1px: nunca scroll lateral. */
+html { overflow-x: clip; }
+
+/* Tokens de marca disponibles como utilidades: bg-ink, text-ivory, text-oro-3, font-display… */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ivory: var(--ivory);
+  --color-muted: var(--muted);
+  --color-oro-1: var(--oro-1);
+  --color-oro-2: var(--oro-2);
+  --color-oro-3: var(--oro-3);
+  --color-oro-4: var(--oro-4);
+  --color-oro-5: var(--oro-5);
+  --color-oro-6: var(--oro-6);
+  --color-up: var(--up);
+  --color-down: var(--down);
+  --font-display: var(--f-display);
+  --font-sans: var(--f-body);
+  --font-mono: var(--f-mono);
+  --font-sign: var(--f-sign);
+}
+
+/* Tailwind trae su propio `.container`: lo reemplazamos por el de la marca. */
+@utility container {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+
+@utility bg-oro { background: var(--oro-metal); }
+@utility bg-oro-h { background: var(--oro-metal-h); }
+@utility canto-oro { box-shadow: var(--oro-canto); }
+
+/* ---------- Transiciones entre páginas (React <ViewTransition>) ---------- */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0s; }
+::view-transition-old(.pagina) { animation: vt-salir 0.28s var(--ease-in-out) both; }
+::view-transition-new(.pagina) { animation: vt-entrar 0.55s var(--ease) both; }
+@keyframes vt-salir { to { opacity: 0; transform: translateY(-10px); filter: blur(4px); } }
+@keyframes vt-entrar { from { opacity: 0; transform: translateY(18px); filter: blur(6px); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(.pagina), ::view-transition-new(.pagina) { animation: none; }
+}
+
+/* ---------- Área de miembros ---------- */
+.app-shell { min-height: 100svh; padding: calc(var(--header-h) + 2.5rem) 0 6rem; }
+.app-grid { display: grid; gap: 1.25rem; }
+@media (min-width: 900px) { .app-grid { grid-template-columns: repeat(12, 1fr); } }
+.tile {
+  position: relative; border-radius: var(--radius); border: 1px solid var(--line);
+  background: linear-gradient(160deg, var(--ink-3), var(--ink-2)); padding: 1.6rem;
+  display: flex; flex-direction: column; gap: 0.8rem; overflow: hidden;
+  transition: border-color 0.4s, transform 0.5s var(--ease);
+}
+.tile:hover { border-color: var(--line-gold); transform: translateY(-3px); }
+.tile__label { font-family: var(--f-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.tile__value { font-family: var(--f-display); font-size: var(--step-3); line-height: 1; }
+.progress { height: 6px; border-radius: 99px; background: var(--ink-4); overflow: hidden; }
+.progress > i { display: block; height: 100%; width: var(--v, 0%); background: var(--oro-metal-h); box-shadow: var(--oro-canto); border-radius: inherit; }
+.soon { font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.3rem 0.6rem; border-radius: 99px; border: 1px solid var(--line-2); color: var(--muted); width: fit-content; height: fit-content; flex: none; align-self: flex-start; white-space: nowrap; }

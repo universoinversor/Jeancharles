@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Capa cinemática — modelo visual del logo reveal oficial:
+   noche azul-negra, luz que barre el metal, el escudo león-águila en oro.
+   ========================================================================== */
+
+:root {
+    --night: #05050c;           /* el fondo del video, un negro con azul */
+    --night-2: #0a0a18;
+}
+
+/* ---------- Hero cinemático ---------- */
+.hero--cinema { background: var(--night); isolation: isolate; }
+/* Aurora dorada: tres focos de luz cálida que derivan muy despacio. Es el "movimiento"
+   del fondo sin depender de un video; pesa cero bytes y respeta el modo sin animación. */
+.aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(70px); mix-blend-mode: screen; will-change: transform; }
+.aurora i:nth-child(1) { width: 62vmax; height: 62vmax; right: -18vmax; top: -22vmax; background: radial-gradient(closest-side, rgba(224, 184, 74, 0.34), rgba(142, 102, 22, 0.12) 55%, transparent); animation: deriva-a 26s ease-in-out infinite alternate; }
+.aurora i:nth-child(2) { width: 48vmax; height: 48vmax; left: -16vmax; bottom: -24vmax; background: radial-gradient(closest-side, rgba(142, 102, 22, 0.38), rgba(92, 63, 8, 0.12) 60%, transparent); animation: deriva-b 32s ease-in-out infinite alternate; }
+.aurora i:nth-child(3) { width: 30vmax; height: 30vmax; left: 38%; top: 18%; background: radial-gradient(closest-side, rgba(255, 244, 206, 0.12), transparent); animation: deriva-c 20s ease-in-out infinite alternate; }
+@keyframes deriva-a { to { transform: translate3d(-8vmax, 6vmax, 0) scale(1.12); } }
+@keyframes deriva-b { to { transform: translate3d(10vmax, -6vmax, 0) scale(0.92); } }
+@keyframes deriva-c { to { transform: translate3d(-12vmax, 8vmax, 0) scale(1.3); } }
+.hero--cinema::before {
+    /* viñeta: concentra la luz en el centro y oscurece los bordes */
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(5, 5, 12, 0.85) 100%), linear-gradient(180deg, transparent 70%, var(--ink));
+}
+/* Luz que sigue al puntero, con retraso: un reflejo pesado, no una linterna. */
+.hero__spot {
+    position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(600px circle at var(--mx, 70%) var(--my, 40%), rgba(224, 184, 74, 0.13), transparent 60%);
+    transition: background-position 0.6s;
+}
+.dust { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+
+/* ---------- Escudo oficial con brillo metálico ---------- */
+.crest {
+    position: relative; display: block; aspect-ratio: 440 / 480; width: 100%;
+    filter: drop-shadow(0 0 30px rgba(224, 184, 74, 0.35)) drop-shadow(0 18px 40px rgba(0, 0, 0, 0.6));
+}
+.crest img { width: 100%; height: 100%; object-fit: contain; }
+/* El reflejo recorre el escudo recortado por su propia forma. */
+.crest::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 244, 206, 0.95) 48%, rgba(255, 255, 255, 0.6) 50%, transparent 60%);
+    background-size: 280% 100%; background-position: 120% 0; mix-blend-mode: overlay;
+    -webkit-mask: url(/brand/crest.webp) center / contain no-repeat; mask: url(/brand/crest.webp) center / contain no-repeat;
+    animation: sheen 5.5s var(--ease-in-out) 1.4s infinite;
+}
+@keyframes sheen { 0% { background-position: 120% 0; } 45%, 100% { background-position: -40% 0; } }
+
+.seal--crest .seal__inner {
+    inset: 14%; overflow: visible; background: radial-gradient(circle at 50% 45%, rgba(224, 184, 74, 0.16), rgba(10, 10, 24, 0.55) 60%, transparent 72%);
+    border-color: transparent; box-shadow: none;
+}
+.seal--crest .crest { width: 74%; animation: float 7s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.seal__halo {
+    position: absolute; inset: 18%; border-radius: 50%; z-index: -1;
+    background: conic-gradient(from 0deg, transparent, rgba(224, 184, 74, 0.35), transparent 30%, transparent 60%, rgba(242, 217, 139, 0.25), transparent 85%);
+    filter: blur(28px); animation: spin 14s linear infinite;
+}
+
+/* ---------- Marca: escudo + wordmark ---------- */
+.brand-lockup { display: inline-flex; align-items: center; gap: 0.7rem; }
+.brand-lockup__crest { height: 42px; width: auto; filter: drop-shadow(0 0 10px rgba(224, 184, 74, 0.35)); }
+.brand-lockup__word { height: 17px; width: auto; }
+@media (max-width: 420px) { .brand-lockup__word { height: 14px; } }
+.hero__wordmark { width: min(340px, 72vw); height: auto; filter: drop-shadow(0 0 18px rgba(224, 184, 74, 0.35)); }
+
+/* ---------- Banda cinemática (imagen a sangre + frase) ---------- */
+.cinema {
+    position: relative; min-height: min(92svh, 900px); display: grid; align-items: end; overflow: hidden;
+    background: var(--night); isolation: isolate;
+}
+.cinema__crest {
+    position: absolute; z-index: -1; right: -4%; top: 50%; width: min(620px, 62vw); transform: translateY(-50%) rotate(-6deg);
+    opacity: 0.5; filter: drop-shadow(0 0 60px rgba(224, 184, 74, 0.35)) !important;
+}
+@supports (animation-timeline: view()) {
+    .cinema__crest { animation: parallax-crest linear both; animation-timeline: view(); }
+    @keyframes parallax-crest { from { transform: translateY(-38%) rotate(-10deg); } to { transform: translateY(-62%) rotate(-2deg); } }
+}
+.cinema::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(90deg, var(--night) 0%, rgba(5, 5, 12, 0.75) 45%, transparent 75%), linear-gradient(180deg, var(--ink), transparent 25%, transparent 75%, var(--ink));
+}
+.cinema__body { padding-block: clamp(4rem, 10vw, 9rem); }
+.cinema__title { font-family: var(--f-display); font-weight: 500; font-size: clamp(3rem, 1.5rem + 7vw, 9rem); line-height: 0.92; letter-spacing: -0.03em; }
+.cinema__title span { display: block; }
+.cinema__meta { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; margin-top: 2rem; font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ivory-2); }
+.cinema__meta span::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 0.7rem; transform: rotate(45deg) translateY(-2px); background: var(--oro-metal-min); }
+
+/* ---------- Universo JC (mosaico de imágenes grandes) ---------- */
+.universe { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 760px) {
+    .universe { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 280px; }
+    .universe > :nth-child(1) { grid-column: span 4; grid-row: span 2; }
+    .universe > :nth-child(2) { grid-column: span 2; grid-row: span 2; }
+    .universe > :nth-child(3), .universe > :nth-child(4), .universe > :nth-child(5) { grid-column: span 2; }
+}
+.tile-x {
+    position: relative; min-height: 320px; border-radius: var(--radius); overflow: hidden; isolation: isolate;
+    background: var(--night-2); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.6rem;
+    border: 1px solid var(--line);
+}
+.tile-x::before {
+    /* filo dorado que aparece al pasar por encima */
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: 2; pointer-events: none;
+    background: var(--oro-metal); opacity: 0; transition: opacity 0.5s var(--ease);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+}
+.tile-x:hover::before, .tile-x:focus-visible::before { opacity: 1; }
+.tile-x img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease), filter 0.8s; filter: saturate(0.85) brightness(0.8); }
+.tile-x:hover img { transform: scale(1.07); filter: saturate(1) brightness(0.95); }
+.tile-x::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 35%, rgba(5, 5, 12, 0.92)); }
+.tile-x__kicker { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--oro-2); }
+.tile-x__title { font-family: var(--f-display); font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.8rem); line-height: 1.02; margin-top: 0.4rem; }
+.tile-x__go { position: absolute; top: 1.2rem; right: 1.2rem; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: rgba(5, 5, 12, 0.5); border: 1px solid var(--line-2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background 0.4s, color 0.4s, transform 0.5s var(--ease); }
+.tile-x:hover .tile-x__go { background: var(--oro-metal); color: #241a04; transform: rotate(-45deg); }
+
+/* ---------- Pie con escudo ---------- */
+.footer-crest { display: grid; justify-items: center; gap: 1.2rem; margin-top: clamp(3rem, 2rem + 4vw, 6rem); }
+.footer-crest img:first-child { width: clamp(90px, 12vw, 140px); height: auto; filter: drop-shadow(0 0 30px rgba(224, 184, 74, 0.35)); }
+.footer-crest img:last-child { width: min(620px, 86vw); height: auto; opacity: 0.9; -webkit-mask-image: linear-gradient(180deg, #000 40%, rgba(0, 0, 0, 0.35)); mask-image: linear-gradient(180deg, #000 40%, rgba(0, 0, 0, 0.35)); }
+
+/* ---------- Retrato delante del sello ---------- */
+.seal--person .seal__inner { inset: 10%; }
+.seal--person .crest { width: 92%; opacity: 0.42; filter: blur(0.3px) drop-shadow(0 0 40px rgba(224, 184, 74, 0.45)); }
+.seal__person {
+    position: absolute; z-index: 3; left: 0; right: 0; margin-inline: auto; bottom: -7%; height: 108%; width: auto; max-width: none;
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 30px rgba(224, 184, 74, 0.18));
+    -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%); mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+    opacity: 0; animation: fade 1.4s var(--ease) 0.7s forwards;
+}
+.seal--person .seal__tag { z-index: 4; }
+
+@media (prefers-reduced-motion: reduce) {
+    .aurora i, .cinema__crest { animation: none; }
+    .seal__person { opacity: 1; }
+    .crest::after, .seal--crest .crest, .seal__halo { animation: none; }
+}
+
+/* ---------- Tarjeta cripto (pieza de metal) ---------- */
+.cardx-wrap { display: grid; gap: 3.5rem; align-items: center; }
+@media (min-width: 960px) { .cardx-wrap { grid-template-columns: 1fr 1.1fr; } }
+.cardx {
+    position: relative; width: min(440px, 100%); aspect-ratio: 1.586; margin-inline: auto; border-radius: 22px; overflow: hidden;
+    padding: 1.6rem; display: grid; align-content: space-between; color: #241a04;
+    background: var(--oro-metal); box-shadow: var(--oro-canto), 0 40px 90px -30px rgba(224, 184, 74, 0.55);
+    transform: perspective(1200px) rotateY(-14deg) rotateX(6deg); transition: transform 1s var(--ease);
+}
+.cardx:hover { transform: perspective(1200px) rotateY(0) rotateX(0); }
+.cardx::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 48%, transparent 60%); background-size: 260% 100%; animation: sheen 6s var(--ease-in-out) 1s infinite; mix-blend-mode: overlay; }
+.cardx__chip { width: 46px; height: 34px; border-radius: 7px; background: linear-gradient(135deg, #5c3f08, #c29327 40%, #fff4ce 55%, #8e6616); box-shadow: inset 0 0 0 1px rgba(36, 26, 4, 0.4); }
+.cardx__brand { position: absolute; top: 1.6rem; right: 1.6rem; font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.2em; font-weight: 500; }
+.cardx__num { font-family: var(--f-mono); font-size: clamp(1rem, 0.8rem + 1vw, 1.35rem); letter-spacing: 0.12em; }
+.cardx__name { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.22em; }
+.cardx__crest { position: absolute; right: 1.2rem; bottom: 1rem; width: 64px; height: auto; filter: drop-shadow(0 2px 2px rgba(36, 26, 4, 0.45)) sepia(0.4) brightness(0.55); opacity: 0.85; }
+
+/* ---------- Calculadora ---------- */
+.calc { display: grid; gap: 1.25rem; padding: clamp(1.4rem, 1rem + 1.5vw, 2rem); border-radius: var(--radius); border: 1px solid var(--line-gold); background: linear-gradient(160deg, var(--ink-3), var(--ink-2)); }
+.calc__out { display: grid; gap: 0.4rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.calc__big { font-family: var(--f-display); font-size: var(--step-4); line-height: 1; background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); filter: var(--oro-relieve-sm); width: fit-content; }
+.calc__big.is-down { background: none; -webkit-text-fill-color: var(--down); filter: none; }
+
+/* ---------- Botón flotante de WhatsApp ---------- */
+.wa-float {
+    position: fixed; z-index: 75; right: 1.1rem; bottom: 1.1rem; width: 56px; height: 56px; border-radius: 50%;
+    display: grid; place-items: center; color: #241a04; background: var(--oro-metal); box-shadow: var(--oro-canto), 0 14px 30px -10px rgba(0, 0, 0, 0.7);
+    transition: transform 0.4s var(--ease);
+}
+.wa-float:hover { transform: translateY(-3px) scale(1.04); }
+/* En móvil baja a la esquina y solo sube cuando aparece la barra "Agendar llamada". */
+.wa-float { transition: transform 0.4s var(--ease), bottom 0.4s var(--ease); }
+@media (max-width: 1119px) { body:has(.sticky-cta.is-visible) .wa-float { bottom: 5.4rem; } }
+@media (max-width: 600px) { .wa-float { width: 50px; height: 50px; right: .9rem; bottom: calc(.9rem + env(safe-area-inset-bottom, 0px)); } }
+@media (prefers-reduced-motion: reduce) { .cardx::after { animation: none; } }
+
+/* Signos de las cifras del hero: en Bodoni el "+" es un filete casi invisible, así que va en oro y arriba. */
+.hero__meta dd sup { font-size: 0.5em; vertical-align: super; margin-inline: 1px; background: var(--oro-metal-min); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); }
+.hero__meta dd sup, .stat__num sup { font-family: var(--f-body); font-weight: 600; }
+@media (max-width: 600px) {
+    .seal--person .seal__tag--a { top: auto; bottom: 16%; right: 0; }
+    .seal--person .seal__tag--b { bottom: 2%; left: 0; }
+}
+
+/* ---------- Índice de secciones (escritorio) ---------- */
+.rail {
+  position: fixed; right: clamp(.75rem, 1.6vw, 1.75rem); top: 50%; transform: translateY(-50%); z-index: 60;
+  display: none; flex-direction: column; align-items: flex-end; gap: 1rem;
+}
+@media (min-width: 1280px) and (min-height: 640px) { .rail { display: flex; } }
+.rail__count { font-size: .68rem; letter-spacing: .14em; color: var(--oro-3); padding-right: 2px; }
+.rail__count i { font-style: normal; color: var(--ivory-3, rgba(239,232,218,.35)); margin-inline: .25em; }
+.rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
+.rail a { display: flex; align-items: center; justify-content: flex-end; gap: .8rem; padding: .32rem 0; }
+.rail__dot {
+  width: 6px; height: 6px; border-radius: 50%; flex: none; margin-right: 2px;
+  background: rgba(239, 232, 218, .28); transition: transform .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+}
+.rail__label {
+  font-family: var(--f-mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ivory-2);
+  opacity: 0; transform: translateX(8px); transition: opacity .35s var(--ease), transform .35s var(--ease), color .3s;
+  white-space: nowrap; pointer-events: none;
+  padding: .25rem .55rem; border-radius: 99px; background: rgba(7, 7, 10, .72);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.rail a:hover .rail__label, .rail a:focus-visible .rail__label { opacity: 1; transform: none; }
+.rail a:hover .rail__dot { background: var(--oro-2); }
+.rail a.is-active .rail__label { color: var(--oro-2); }
+.rail a.is-active .rail__dot { background: var(--oro-metal); transform: scale(1.7); box-shadow: 0 0 0 3px rgba(224, 184, 74, .18), 0 0 14px rgba(224, 184, 74, .55); }
+
+/* ---------- Contacto (home) ---------- */
+.contact { display: grid; gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
+@media (min-width: 960px) { .contact { grid-template-columns: 1fr 1.1fr; } }
+.contact__list { list-style: none; padding: 0; margin: 2rem 0 1.5rem; display: grid; border-top: 1px solid var(--line); }
+.contact__list li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.contact__list span { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--oro-3); }
+.contact__list a, .contact__list p { margin: 0; font-size: 1.05rem; overflow-wrap: anywhere; }
+.contact__list a { transition: color .3s; }
+.contact__list a:hover { color: var(--oro-2); }
+.contact__note { display: flex; align-items: center; gap: .6rem; font-size: .78rem; margin-bottom: 1.5rem; }
+.contact__body { padding: clamp(1.25rem, 3vw, 2rem); }
+@media (max-width: 480px) {
+  .contact__list li { grid-template-columns: 1fr; gap: .3rem; }
+  .contact__form .panel__head span { display: none; }
+}
