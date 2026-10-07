@@ -59,12 +59,10 @@ Next.js 16 (App Router, `src/`) · React 19 · TypeScript · Tailwind v4 · Supa
 - Logo oficial: escudo león-águila en oro + wordmark de pincel "JEAN CHARLES".
   Archivos en `public/brand/`: `logo-full`, `crest` (solo escudo), `wordmark` (.webp/.png, fondo transparente).
   Íconos de app: `src/app/icon.png`, `apple-icon.png`, `public/brand/icon-*.png`.
-- Modelo visual: el logo reveal oficial (auto deportivo de noche, luz que barre el metal,
-  el escudo pasa de cromo a oro). Fondo noche azul-negra `--night #05050c`.
-- Medios en `public/media/`: `intro.(webm|mp4)` (intro vertical 18 s, una vez por sesión),
-  `hero-loop.(webm|mp4)` (auto, horizontal, ida y vuelta), y fotogramas `headlight`, `car-reflection`, posters.
-- Estilo: lujo extravagante y MUY visual — imágenes grandes, video, oro con brillo, polvo de oro (`<GoldDust>`).
-  Capa en `src/styles/cinematic.css` (intro, hero cinemático, `.crest` con reflejo, `.cinema`, `.universe`).
+- Sin video ni imágenes de autos (decisión de Jean Charles, 2026-10-07: "el video ese no me gusta").
+  El movimiento del fondo es la **aurora dorada** (`.aurora`, CSS puro) + `<GoldDust>`; fondo noche `--night #05050c`.
+- Estilo: lujo extravagante y MUY visual — imágenes grandes, oro con brillo, polvo de oro (`<GoldDust>`).
+  Capa en `src/styles/cinematic.css` (aurora, hero, `.crest` con reflejo, `.cinema` con escudo gigante, `.universe`).
 
 ## Reglas de contenido
 

@@ -4,7 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Overlays } from "@/components/app/Overlays";
 import { SiteEffects } from "@/components/app/SiteEffects";
-import { CinematicIntro, introGateScript } from "@/components/app/CinematicIntro";
 import { site } from "@/lib/site";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 // Fuentes alojadas en el propio sitio (sin Google Fonts): más rápido y sin depender de terceros.
@@ -62,11 +61,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: introGateScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
-        <CinematicIntro />
         <a className="skip-link" href="#main">Saltar al contenido</a>
         <div className="grain" aria-hidden="true" />
         <div className="cursor" aria-hidden="true"><div className="cursor__dot" /></div>

@@ -8,50 +8,22 @@
     --night-2: #0a0a18;
 }
 
-/* ---------- Intro cinemática ---------- */
-.intro {
-    position: fixed; inset: 0; z-index: 200; background: #000;
-    display: grid; place-items: center; overflow: hidden;
-    transition: opacity 0.9s var(--ease), visibility 0s linear 0.9s;
-}
-html[data-intro="seen"] .intro { display: none; }
-.intro.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
-.intro__fill {
-    position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover;
-    filter: blur(40px) brightness(0.45) saturate(1.2); transform: scale(1.1);
-}
-.intro__video { position: relative; height: 100%; width: auto; max-width: 100%; object-fit: contain; }
-@media (max-aspect-ratio: 9/16) { .intro__video { width: 100%; height: auto; } }
-.intro__bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: rgba(255, 255, 255, 0.08); }
-.intro__bar i { display: block; height: 100%; width: 100%; background: var(--oro-metal-h); transform-origin: left; transform: scaleX(var(--p, 0)); box-shadow: 0 0 12px rgba(224, 184, 74, 0.8); }
-.intro__skip {
-    position: absolute; right: max(1.25rem, env(safe-area-inset-right)); bottom: 2rem;
-    font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
-    padding: 0.8rem 1.2rem; border-radius: 999px; color: var(--ivory);
-    background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.18);
-    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    transition: background 0.3s, border-color 0.3s;
-}
-.intro__skip:hover { background: rgba(224, 184, 74, 0.2); border-color: var(--oro-3); }
-html.intro-playing body { overflow: hidden; }
-
 /* ---------- Hero cinemático ---------- */
 .hero--cinema { background: var(--night); isolation: isolate; }
-.hero__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
-.hero__media video, .hero__media img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%;
-    opacity: 0.55; filter: saturate(1.05) contrast(1.05);
-}
-/* El texto vive a la izquierda: oscurecemos ese lado y abajo, el auto respira a la derecha. */
-.hero__media::after {
-    content: ""; position: absolute; inset: 0;
-    background:
-        linear-gradient(90deg, var(--night) 0%, rgba(5, 5, 12, 0.92) 30%, rgba(5, 5, 12, 0.45) 62%, rgba(5, 5, 12, 0.7) 100%),
-        linear-gradient(180deg, rgba(5, 5, 12, 0.7) 0%, transparent 25%, transparent 70%, var(--ink) 100%);
-}
-@media (max-width: 999px) {
-    .hero__media video, .hero__media img { opacity: 0.35; }
-    .hero__media::after { background: linear-gradient(180deg, rgba(5, 5, 12, 0.75), rgba(5, 5, 12, 0.6) 40%, var(--ink)); }
+/* Aurora dorada: tres focos de luz cálida que derivan muy despacio. Es el "movimiento"
+   del fondo sin depender de un video; pesa cero bytes y respeta el modo sin animación. */
+.aurora { position: absolute; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(70px); mix-blend-mode: screen; will-change: transform; }
+.aurora i:nth-child(1) { width: 62vmax; height: 62vmax; right: -18vmax; top: -22vmax; background: radial-gradient(closest-side, rgba(224, 184, 74, 0.34), rgba(142, 102, 22, 0.12) 55%, transparent); animation: deriva-a 26s ease-in-out infinite alternate; }
+.aurora i:nth-child(2) { width: 48vmax; height: 48vmax; left: -16vmax; bottom: -24vmax; background: radial-gradient(closest-side, rgba(142, 102, 22, 0.38), rgba(92, 63, 8, 0.12) 60%, transparent); animation: deriva-b 32s ease-in-out infinite alternate; }
+.aurora i:nth-child(3) { width: 30vmax; height: 30vmax; left: 38%; top: 18%; background: radial-gradient(closest-side, rgba(255, 244, 206, 0.12), transparent); animation: deriva-c 20s ease-in-out infinite alternate; }
+@keyframes deriva-a { to { transform: translate3d(-8vmax, 6vmax, 0) scale(1.12); } }
+@keyframes deriva-b { to { transform: translate3d(10vmax, -6vmax, 0) scale(0.92); } }
+@keyframes deriva-c { to { transform: translate3d(-12vmax, 8vmax, 0) scale(1.3); } }
+.hero--cinema::before {
+    /* viñeta: concentra la luz en el centro y oscurece los bordes */
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(5, 5, 12, 0.85) 100%), linear-gradient(180deg, transparent 70%, var(--ink));
 }
 /* Luz que sigue al puntero, con retraso: un reflejo pesado, no una linterna. */
 .hero__spot {
@@ -101,17 +73,17 @@ html.intro-playing body { overflow: hidden; }
     position: relative; min-height: min(92svh, 900px); display: grid; align-items: end; overflow: hidden;
     background: var(--night); isolation: isolate;
 }
-.cinema__img {
-    position: absolute; inset: -12% 0; z-index: -2; width: 100%; height: 124%; object-fit: cover;
+.cinema__crest {
+    position: absolute; z-index: -1; right: -4%; top: 50%; width: min(620px, 62vw); transform: translateY(-50%) rotate(-6deg);
+    opacity: 0.5; filter: drop-shadow(0 0 60px rgba(224, 184, 74, 0.35)) !important;
 }
 @supports (animation-timeline: view()) {
-    .cinema__img { animation: parallax linear both; animation-timeline: view(); }
-    @keyframes parallax { from { transform: translateY(-8%) scale(1.06); } to { transform: translateY(8%) scale(1.06); } }
+    .cinema__crest { animation: parallax-crest linear both; animation-timeline: view(); }
+    @keyframes parallax-crest { from { transform: translateY(-38%) rotate(-10deg); } to { transform: translateY(-62%) rotate(-2deg); } }
 }
 .cinema::after {
-    content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(180deg, var(--ink) 0%, rgba(5, 5, 12, 0.2) 30%, rgba(5, 5, 12, 0.35) 60%, var(--ink) 100%),
-        radial-gradient(ellipse at 80% 30%, transparent 30%, rgba(5, 5, 12, 0.6) 80%);
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(90deg, var(--night) 0%, rgba(5, 5, 12, 0.75) 45%, transparent 75%), linear-gradient(180deg, var(--ink), transparent 25%, transparent 75%, var(--ink));
 }
 .cinema__body { padding-block: clamp(4rem, 10vw, 9rem); }
 .cinema__title { font-family: var(--f-display); font-weight: 500; font-size: clamp(3rem, 1.5rem + 7vw, 9rem); line-height: 0.92; letter-spacing: -0.03em; }
@@ -165,9 +137,9 @@ html.intro-playing body { overflow: hidden; }
 .seal--person .seal__tag { z-index: 4; }
 
 @media (prefers-reduced-motion: reduce) {
+    .aurora i, .cinema__crest { animation: none; }
     .seal__person { opacity: 1; }
     .crest::after, .seal--crest .crest, .seal__halo { animation: none; }
-    .cinema__img { animation: none; }
 }
 
 /* ---------- Tarjeta cripto (pieza de metal) ---------- */

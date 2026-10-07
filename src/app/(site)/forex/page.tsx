@@ -17,9 +17,7 @@ export default function ForexPage() {
   return (
     <>
       <section className="hero hero--cinema" aria-labelledby="fx-title" style={{ minHeight: "92svh" }}>
-        <div className="hero__media" aria-hidden="true">
-          <img src="/media/headlight.webp" alt="" style={{ opacity: 0.35 }} />
-        </div>
+        <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="grid-lines" aria-hidden="true" />
         <div className="container hero__grid">
           <div>

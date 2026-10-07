@@ -7,7 +7,8 @@ import { cinema, universe } from "@/content/home";
 export function CinemaBand() {
   return (
     <section className="cinema" aria-label="Manifiesto">
-      <img className="cinema__img" src={cinema.image} alt="" loading="lazy" width={1080} height={1080} />
+      <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
+      <span className="cinema__crest crest" aria-hidden="true"><img src="/brand/crest.webp" alt="" width={440} height={480} loading="lazy" /></span>
       <div className="container cinema__body">
         <p className="cinema__title reveal">
           {cinema.lines.map((l, i) => (

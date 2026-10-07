@@ -3,14 +3,12 @@
 import { useEffect, useRef } from "react";
 import { GoldDust } from "@/components/widgets/GoldDust";
 
-/** Video de fondo + luz que sigue al puntero + polvo de oro. */
+/** Aurora dorada de fondo + luz que sigue al puntero + polvo de oro. */
 export function HeroFx() {
   const spot = useRef<HTMLDivElement>(null);
-  const vid = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) vid.current?.pause();
     const hero = spot.current?.closest<HTMLElement>(".hero");
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     if (!hero || !fine || reduce) return;
@@ -33,12 +31,7 @@ export function HeroFx() {
 
   return (
     <>
-      <div className="hero__media" aria-hidden="true">
-        <video ref={vid} autoPlay muted loop playsInline preload="metadata" poster="/media/hero-poster.webp">
-          <source src="/media/hero-loop.webm" type="video/webm" />
-          <source src="/media/hero-loop.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
       <div className="hero__spot" ref={spot} aria-hidden="true" />
       <GoldDust />
     </>

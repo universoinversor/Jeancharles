@@ -79,7 +79,6 @@ export const articles = [
 export const cinema = {
   lines: ["Precisión.", "Potencia.", "Legado."],
   meta: ["Mercados", "Negocios", "Mente", "Cuerpo"],
-  image: "/media/headlight.webp",
 };
 
 export const universe = [
