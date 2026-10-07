@@ -5,6 +5,7 @@ import { TradingView } from "@/components/widgets/TradingView";
 import { CryptoCalculator } from "@/components/widgets/CryptoCalculator";
 import { partners } from "@/lib/site";
 import { SectionRail } from "@/components/ui/SectionRail";
+import { Monedas } from "@/components/ui/Monedas";
 
 export const metadata: Metadata = {
   title: "Cripto Terminal — Mercados en tiempo real",
@@ -40,6 +41,7 @@ export default function CryptoPage() {
       <SectionRail />
       <PageHero
         id="crypto-title"
+        decor={<Monedas set="cripto" />}
         badge={<><span className="live-dot" /> Datos en vivo</>}
         title={<GoldTitle as="h1" className="display h1" pre="Cripto" gold="Terminal" />}
         lead="Panel de inteligencia de mercado: precios en tiempo real, análisis técnico y sentimiento global — en un solo lugar."

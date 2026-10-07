@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { GoldDust } from "@/components/widgets/GoldDust";
+import { Monedas } from "@/components/ui/Monedas";
 
 /** Aurora dorada de fondo + luz que sigue al puntero + polvo de oro. */
 export function HeroFx() {
@@ -34,6 +35,7 @@ export function HeroFx() {
       <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
       <div className="hero__spot" ref={spot} aria-hidden="true" />
       <GoldDust />
+      <Monedas set="hero" />
     </>
   );
 }

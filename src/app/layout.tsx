@@ -7,8 +7,8 @@ import { SiteEffects } from "@/components/app/SiteEffects";
 import { site } from "@/lib/site";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 // Fuentes alojadas en el propio sitio (sin Google Fonts): más rápido y sin depender de terceros.
-import "@fontsource-variable/bodoni-moda/opsz.css";
-import "@fontsource-variable/bodoni-moda/opsz-italic.css";
+import "@fontsource-variable/bodoni-moda/standard.css";
+import "@fontsource-variable/bodoni-moda/standard-italic.css";
 import "@fontsource-variable/instrument-sans/index.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";

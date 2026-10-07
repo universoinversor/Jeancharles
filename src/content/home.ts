@@ -70,10 +70,10 @@ export const videos = [
   { id: "Ud4X__a61bA", kicker: "YouTube", title: "Mentalidad & negocio" },
 ];
 
-export const articles = [
-  { tag: "Finanzas", title: "Bitcoin en 2026: ¿refugio o riesgo?", text: "Ciclos de mercado y adopción institucional: dónde está la próxima gran oportunidad.", img: "https://images.unsplash.com/photo-1611974765270-ca1258634369?auto=format&fit=crop&w=900&q=75", alt: "Gráfico de mercado financiero" },
-  { tag: "Mentalidad", title: "La psicología del 1%", text: "Cómo los líderes de alto rendimiento gestionan el estrés y deciden bajo presión.", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=75", alt: "Reunión de liderazgo" },
-  { tag: "Negocios", title: "Sistemas invisibles de escalado", text: "Deja de operar tu negocio y empieza a dirigirlo: los tres sistemas que automatizan el crecimiento.", img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=900&q=75", alt: "Equipo de negocios planificando" },
+export const articles: { tag: string; title: string; text: string; art: "cripto" | "mente" | "negocios" }[] = [
+  { tag: "Finanzas", title: "Bitcoin en 2026: ¿refugio o riesgo?", text: "Ciclos de mercado y adopción institucional: dónde está la próxima gran oportunidad.", art: "cripto" },
+  { tag: "Mentalidad", title: "La psicología del 1%", text: "Cómo los líderes de alto rendimiento gestionan el estrés y deciden bajo presión.", art: "mente" },
+  { tag: "Negocios", title: "Sistemas invisibles de escalado", text: "Deja de operar tu negocio y empieza a dirigirlo: los tres sistemas que automatizan el crecimiento.", art: "negocios" },
 ];
 
 export const cinema = {
@@ -81,13 +81,14 @@ export const cinema = {
   meta: ["Mercados", "Negocios", "Mente", "Cuerpo"],
 };
 
+// Arte propio en oro (OroArt) o imagen local: nada de fotos de stock.
 export const universe = [
-  { kicker: "Mercados en vivo", title: "Cripto Terminal", href: "/crypto", img: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=1400&q=75", alt: "Monedas de bitcoin" },
-  { kicker: "Alto rendimiento", title: "Nipponflex Health", href: "/nipponflex", img: "/img/mattress.webp", alt: "Colchón Nipponflex Triple S Firm con tecnología FIR" },
-  { kicker: "Academia", title: "Cursos & Mentorías", href: "/cursos", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=75", alt: "Reunión de liderazgo" },
-  { kicker: "Mercados globales", title: "Forex Dashboard", href: "/forex", img: "https://images.unsplash.com/photo-1611974765270-ca1258634369?auto=format&fit=crop&w=900&q=75", alt: "Pantallas con gráficos de divisas" },
-  { kicker: "El nuevo libro", title: "Hope in the Visible", href: "/#libro", img: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=900&q=75", alt: "Libro abierto sobre una mesa" },
-];
+  { kicker: "Mercados en vivo", title: "Cripto Terminal", href: "/crypto", art: "cripto" },
+  { kicker: "Alto rendimiento", title: "Nipponflex Health", href: "/nipponflex", img: "/img/mattress.webp", alt: "Colchón Nipponflex Triple S Firm", variant: "producto" },
+  { kicker: "Academia", title: "Cursos & Mentorías", href: "/cursos", img: "/img/jean-charles.webp", alt: "Jean Charles", variant: "portrait" },
+  { kicker: "Mercados globales", title: "Forex Dashboard", href: "/forex", art: "forex" },
+  { kicker: "El nuevo libro", title: "Hope in the Visible", href: "/#libro", art: "libro" },
+] as const;
 
 /** Frase de Jean Charles (del sitio oficial). */
 export const quote = "Todos sabemos lo que tenemos que hacer, pero la mayoría de la gente todavía no lo hace, porque es difícil salir de nuestra zona de confort.";
