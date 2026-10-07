@@ -63,7 +63,7 @@ export function PageHero({ badge, title, lead, children, center = false, id }: {
   badge: ReactNode; title: ReactNode; lead: ReactNode; children?: ReactNode; center?: boolean; id: string;
 }) {
   return (
-    <section className="page-hero" aria-labelledby={id}>
+    <section className="page-hero" id="arriba" data-nav="Inicio" aria-labelledby={id}>
       <div className="grid-lines" aria-hidden="true" />
       <div className="glow" style={center ? { width: 640, height: 640, top: -200, left: "50%", marginLeft: -320 } : { width: 600, height: 600, top: -220, right: -140 }} aria-hidden="true" />
       <div className="container" style={{ position: "relative", zIndex: 2, ...(center ? { textAlign: "center", display: "grid", justifyItems: "center" } : {}) }}>

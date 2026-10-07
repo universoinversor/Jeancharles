@@ -7,7 +7,7 @@ const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 
 export function Method() {
   return (
-    <section className="section section--line" id="metodo" aria-labelledby="metodo-title">
+    <section className="section section--line" id="metodo" data-nav="Método" aria-labelledby="metodo-title">
       <div className="container">
         <SectionHead
           eyebrow="La tríada del poder"
@@ -31,7 +31,7 @@ export function Method() {
 
 export function Services() {
   return (
-    <section className="section section--raised" id="servicios" aria-labelledby="servicios-title">
+    <section className="section section--raised" id="servicios" data-nav="Servicios" aria-labelledby="servicios-title">
       <div className="container">
         <SectionHead
           eyebrow="Cómo trabajamos juntos"
@@ -59,7 +59,7 @@ export function Services() {
 
 export function Journey() {
   return (
-    <section className="section" aria-labelledby="camino-title">
+    <section className="section" id="camino" data-nav="El camino" aria-labelledby="camino-title">
       <div className="container">
         <SectionHead variant="center" eyebrow="Tu transformación" title={<GoldTitle id="camino-title" pre="El camino al" gold="legado" />} />
         <div className="journey" role="list">

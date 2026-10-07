@@ -29,7 +29,7 @@ export function MarketStrip() {
 
 export function Performance() {
   return (
-    <section className="section" id="rendimiento" aria-labelledby="rendimiento-title">
+    <section className="section" id="rendimiento" data-nav="Mercados" aria-labelledby="rendimiento-title">
       <div className="container">
         <div className="split reveal">
           <div className="split__media">
@@ -55,7 +55,7 @@ export function Performance() {
 
 export function Testimonials() {
   return (
-    <section className="section section--line" id="testimonios" aria-labelledby="testimonios-title">
+    <section className="section section--line" id="testimonios" data-nav="Testimonios" aria-labelledby="testimonios-title">
       <div className="container">
         <SectionHead
           eyebrow="Resultados reales"
@@ -80,7 +80,7 @@ export function Testimonials() {
 
 export function Book() {
   return (
-    <section className="section section--raised" id="libro" aria-labelledby="libro-title">
+    <section className="section section--raised" id="libro" data-nav="Libro" aria-labelledby="libro-title">
       <div className="container book-wrap">
         <div className="book-stage reveal" aria-hidden="true">
           <div className="book">

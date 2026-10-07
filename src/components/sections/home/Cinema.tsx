@@ -26,7 +26,7 @@ export function CinemaBand() {
 /** Mosaico de imágenes grandes con las áreas de la marca. */
 export function Universe() {
   return (
-    <section className="section" id="universo" aria-labelledby="universo-title">
+    <section className="section" id="universo" data-nav="Universo JC" aria-labelledby="universo-title">
       <div className="container">
         <SectionHead
           eyebrow="Todo en un solo lugar"

@@ -4,6 +4,7 @@ import { DialogLink } from "@/components/ui/DialogLink";
 import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Section";
 import { benefits, faq, gateways, problems, products } from "@/content/nipponflex";
 import { partners, whatsappLink } from "@/lib/site";
+import { SectionRail } from "@/components/ui/SectionRail";
 
 export const metadata: Metadata = {
   title: "Nipponflex Health — La ciencia del descanso",
@@ -24,6 +25,7 @@ export default function NipponflexPage() {
   const wa = whatsappLink("Hola Jean Charles, quiero asesoría sobre los sistemas Nipponflex.");
   return (
     <>
+      <SectionRail />
       <PageHero
         id="nf-title"
         center
@@ -38,7 +40,7 @@ export default function NipponflexPage() {
       </PageHero>
 
       {/* El problema */}
-      <section className="section section--line" aria-labelledby="problema-title">
+      <section className="section section--line" id="problema" data-nav="El problema" aria-labelledby="problema-title">
         <div className="container">
           <div className="split reveal">
             <div className="split__media" style={{ background: "#d9d9dc" }}>
@@ -65,7 +67,7 @@ export default function NipponflexPage() {
       </section>
 
       {/* La ciencia */}
-      <section className="section" id="ciencia" aria-labelledby="ciencia-title">
+      <section className="section" id="ciencia" data-nav="Tecnología" aria-labelledby="ciencia-title">
         <div className="container">
           <SectionHead
             eyebrow="La tecnología"
@@ -87,7 +89,7 @@ export default function NipponflexPage() {
       </section>
 
       {/* Catálogo */}
-      <section className="section section--raised" id="catalogo" aria-labelledby="catalogo-title">
+      <section className="section section--raised" id="catalogo" data-nav="Catálogo" aria-labelledby="catalogo-title">
         <div className="container">
           <SectionHead
             variant="center"
@@ -120,7 +122,7 @@ export default function NipponflexPage() {
       </section>
 
       {/* Puertas de entrada */}
-      <section className="section" aria-labelledby="activa-title">
+      <section className="section" id="socios" data-nav="Tienda y socios" aria-labelledby="activa-title">
         <div className="container">
           <SectionHead
             eyebrow="E-Energy by Nipponflex"
@@ -143,7 +145,7 @@ export default function NipponflexPage() {
       </section>
 
       {/* FAQ */}
-      <section className="section section--line" id="faq" aria-labelledby="faq-title">
+      <section className="section section--line" id="faq" data-nav="Preguntas" aria-labelledby="faq-title">
         <div className="container--narrow">
           <SectionHead variant="stack" eyebrow="Preguntas frecuentes" title={<GoldTitle id="faq-title" pre="Antes de" gold="empezar" />} />
           <div className="faq reveal">

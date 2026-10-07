@@ -5,7 +5,7 @@ import { articles, videos } from "@/content/home";
 
 export function Media() {
   return (
-    <section className="section" id="media" aria-labelledby="media-title">
+    <section className="section" id="media" data-nav="Videos" aria-labelledby="media-title">
       <div className="container">
         <SectionHead
           eyebrow="Agencia & Media"
@@ -29,7 +29,7 @@ export function Media() {
 
 export function Journal() {
   return (
-    <section className="section section--line" id="journal" aria-labelledby="journal-title">
+    <section className="section section--line" id="journal" data-nav="Blog" aria-labelledby="journal-title">
       <div className="container">
         <SectionHead
           eyebrow="Pensamiento estratégico"

@@ -4,6 +4,7 @@ import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Secti
 import { TradingView } from "@/components/widgets/TradingView";
 import { CryptoCalculator } from "@/components/widgets/CryptoCalculator";
 import { partners } from "@/lib/site";
+import { SectionRail } from "@/components/ui/SectionRail";
 
 export const metadata: Metadata = {
   title: "Cripto Terminal — Mercados en tiempo real",
@@ -36,6 +37,7 @@ const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 export default function CryptoPage() {
   return (
     <>
+      <SectionRail />
       <PageHero
         id="crypto-title"
         badge={<><span className="live-dot" /> Datos en vivo</>}
@@ -45,7 +47,7 @@ export default function CryptoPage() {
 
       <TradingView kind="ticker-tape" className="market-strip" config={TICKER} />
 
-      <section className="section section--tight" id="activos" aria-labelledby="activos-title">
+      <section className="section section--tight" id="activos" data-nav="Activos" aria-labelledby="activos-title">
         <div className="container">
           <SectionHead
             eyebrow="Activos principales"
@@ -63,7 +65,7 @@ export default function CryptoPage() {
         </div>
       </section>
 
-      <section className="section section--tight section--line" id="analisis" aria-labelledby="analisis-title">
+      <section className="section section--tight section--line" id="analisis" data-nav="Análisis" aria-labelledby="analisis-title">
         <div className="container">
           <SectionHead variant="stack" eyebrow="Análisis técnico" title={<GoldTitle id="analisis-title" pre="BTC/USD" gold="en vivo" />} />
           <div className="dash dash--main">
@@ -94,7 +96,7 @@ export default function CryptoPage() {
         </div>
       </section>
 
-      <section className="section section--tight section--line" id="screener" aria-labelledby="screener-title">
+      <section className="section section--tight section--line" id="screener" data-nav="Screener" aria-labelledby="screener-title">
         <div className="container">
           <SectionHead variant="stack" eyebrow="Mercado completo" title={<GoldTitle id="screener-title" pre="Crypto" gold="screener" />} />
           <div className="panel reveal">
@@ -114,7 +116,7 @@ export default function CryptoPage() {
       </section>
 
       {/* Tarjeta cripto */}
-      <section className="section section--line" id="tarjeta" aria-labelledby="card-title">
+      <section className="section section--line" id="tarjeta" data-nav="Tarjeta" aria-labelledby="card-title">
         <div className="container cardx-wrap">
           <div className="cardx reveal" aria-hidden="true">
             <div className="cardx__chip" />
@@ -141,7 +143,7 @@ export default function CryptoPage() {
       </section>
 
       {/* Calculadora */}
-      <section className="section section--raised" id="calculadora" aria-labelledby="calc-title">
+      <section className="section section--raised" id="calculadora" data-nav="Calculadora" aria-labelledby="calc-title">
         <div className="container book-wrap">
           <div className="reveal">
             <span className="eyebrow">Haz que tu dinero trabaje</span>

@@ -9,7 +9,7 @@ const OFFSETS = [0, 0.18, 0.34, 0.46, 0.62, 0.8, 1];
 
 export function Hero() {
   return (
-    <section className="hero hero--cinema" aria-labelledby="hero-title">
+    <section className="hero hero--cinema" id="inicio" data-nav="Inicio" aria-labelledby="hero-title">
       <HeroFx />
 
       <div className="container hero__grid">

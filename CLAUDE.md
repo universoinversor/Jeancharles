@@ -28,6 +28,9 @@ Next.js 16 (App Router, `src/`) · React 19 · TypeScript · Tailwind v4 · Supa
 - Contenido editable en `src/content/*.ts` — no escribir copy dentro de componentes.
 - Config en `src/lib/site.ts`, valores por entorno en `.env.local` (ver `.env.example`).
 - Diálogos globales: `openDialog("consulta" | "lista")` / `<DialogLink>`; toasts: `toast()` (`src/lib/ui-events.ts`).
+- Navegación por secciones (como el sitio original): cada `<section id data-nav="Etiqueta">` aparece en el
+  índice lateral `<SectionRail />` y marca el menú (`useActiveSection`). Menú: Inicio, Sobre mí, Servicios,
+  Forex, Cripto, Nipponflex, Blog, Contacto. El formulario de agenda es `<BookingForm>` (diálogo y sección Contacto).
 - Efectos de scroll (`.reveal`, `[data-count]`, `.journey`) los activa `SiteEffects` en cada navegación:
   basta con poner las clases en el HTML.
 - Widgets externos: `<TradingView kind config>` y `<YouTubeLite>` (carga diferida, sin cookies).

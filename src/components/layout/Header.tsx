@@ -6,14 +6,23 @@ import { useEffect, useState } from "react";
 import { Brand } from "@/components/ui/Brand";
 import { Socials } from "@/components/ui/Socials";
 import { openDialog } from "@/lib/ui-events";
+import { useActiveSection } from "@/lib/use-active-section";
 
+// Como el sitio original: secciones de la home (#) y páginas propias, en el orden de lectura.
 const NAV = [
-  { href: "/#sobre", label: "Sobre" },
+  { href: "/#inicio", label: "Inicio" },
+  { href: "/#sobre", label: "Sobre mí" },
   { href: "/#servicios", label: "Servicios" },
   { href: "/forex", label: "Forex" },
   { href: "/crypto", label: "Cripto" },
   { href: "/nipponflex", label: "Nipponflex" },
+  { href: "/#journal", label: "Blog" },
+  { href: "/#contacto", label: "Contacto" },
+];
+// Solo en el menú móvil (en escritorio viven en el pie y en "Universo JC").
+const NAV_MOVIL_EXTRA = [
   { href: "/cursos", label: "Cursos" },
+  { href: "/miembros", label: "Miembros" },
 ];
 
 export function Header() {
@@ -59,7 +68,12 @@ export function Header() {
   }, [open]);
 
   const book = (e: React.MouseEvent) => { e.preventDefault(); setOpen(false); openDialog("consulta"); };
-  const isCurrent = (href: string) => !href.includes("#") && pathname.startsWith(href);
+  const { active } = useActiveSection();
+  // Página propia: por ruta. Sección de la home: la que se está leyendo.
+  const current = (href: string): "page" | "location" | undefined => {
+    if (!href.includes("#")) return pathname.startsWith(href) ? "page" : undefined;
+    return pathname === "/" && href === `/#${active}` ? "location" : undefined;
+  };
 
   return (
     <>
@@ -68,9 +82,8 @@ export function Header() {
           <Brand />
           <nav className="nav" aria-label="Principal">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined}>{n.label}</Link>
+              <Link key={n.href} href={n.href} aria-current={current(n.href)}>{n.label}</Link>
             ))}
-            <Link href="/miembros">Miembros</Link>
             <a href="#consulta" className="btn btn--gold btn--sm" onClick={book}>Agendar</a>
           </nav>
           <button
@@ -88,8 +101,8 @@ export function Header() {
 
       <div className={`mobile-menu${open ? " is-open" : ""}`} id="mobile-menu" inert={!open}>
         <nav aria-label="Menú móvil">
-          {[...NAV, { href: "/miembros", label: "Miembros" }].map((n, i) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}>
+          {[...NAV, ...NAV_MOVIL_EXTRA].map((n, i) => (
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} aria-current={current(n.href)} style={{ "--i": i } as React.CSSProperties}>
               <small>{String(i + 1).padStart(2, "0")}</small>{n.label}
             </Link>
           ))}
@@ -100,7 +113,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className={`sticky-cta${showSticky && !open ? " is-visible" : ""}`}>
+      <div className={`sticky-cta${showSticky && !open && active !== "contacto" ? " is-visible" : ""}`}>
         <a href="#consulta" className="btn btn--gold" onClick={book}>Agendar llamada</a>
       </div>
     </>

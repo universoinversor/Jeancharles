@@ -91,3 +91,11 @@ export const universe = [
 
 /** Frase de Jean Charles (del sitio oficial). */
 export const quote = "Todos sabemos lo que tenemos que hacer, pero la mayoría de la gente todavía no lo hace, porque es difícil salir de nuestra zona de confort.";
+
+export const contacto = {
+  eyebrow: "Contacto",
+  pre: "Tu siguiente nivel",
+  gold: "empieza aquí",
+  lead: "Cuéntanos tu objetivo —inversión, negocio, conferencia o bienestar— y el equipo de Jean Charles te responde personalmente.",
+  horario: "Respuesta en menos de 24 h hábiles",
+};

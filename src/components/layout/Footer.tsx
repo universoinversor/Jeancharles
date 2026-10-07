@@ -26,11 +26,13 @@ export function Footer() {
           <div>
             <p className="footer-title">Explorar</p>
             <ul className="footer-links" role="list">
-              <li><Link href="/#sobre">Sobre</Link></li>
+              <li><Link href="/#sobre">Sobre mí</Link></li>
               <li><Link href="/#metodo">Método JC</Link></li>
               <li><Link href="/#servicios">Servicios</Link></li>
               <li><Link href="/#libro">Libro</Link></li>
-              <li><Link href="/#media">Media</Link></li>
+              <li><Link href="/#media">Videos</Link></li>
+              <li><Link href="/#journal">Blog</Link></li>
+              <li><Link href="/#contacto">Contacto</Link></li>
             </ul>
           </div>
           <div>

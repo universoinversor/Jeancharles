@@ -5,6 +5,7 @@ import { CtaBand, GoldTitle, SectionHead } from "@/components/ui/Section";
 import { TradingView } from "@/components/widgets/TradingView";
 import { FOREX_TICKER, forexPrinciples, forexServices } from "@/content/forex";
 import { whatsappLink } from "@/lib/site";
+import { SectionRail } from "@/components/ui/SectionRail";
 
 export const metadata: Metadata = {
   title: "Forex Dashboard — Gestión de inversiones",
@@ -16,7 +17,8 @@ const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 export default function ForexPage() {
   return (
     <>
-      <section className="hero hero--cinema" aria-labelledby="fx-title" style={{ minHeight: "92svh" }}>
+      <SectionRail />
+      <section className="hero hero--cinema" id="arriba" data-nav="Inicio" aria-labelledby="fx-title" style={{ minHeight: "92svh" }}>
         <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="grid-lines" aria-hidden="true" />
         <div className="container hero__grid">
@@ -44,7 +46,7 @@ export default function ForexPage() {
 
       <TradingView kind="ticker-tape" className="market-strip" config={FOREX_TICKER} />
 
-      <section className="section" id="servicios-fx" aria-labelledby="svc-title">
+      <section className="section" id="servicios-fx" data-nav="Servicios" aria-labelledby="svc-title">
         <div className="container">
           <SectionHead
             eyebrow="Servicios élite"
@@ -66,7 +68,7 @@ export default function ForexPage() {
         </div>
       </section>
 
-      <section className="section section--raised section--tight" id="mercados" aria-labelledby="mkt-title">
+      <section className="section section--raised section--tight" id="mercados" data-nav="Mercados" aria-labelledby="mkt-title">
         <div className="container">
           <SectionHead variant="stack" eyebrow="Terminal en vivo" title={<GoldTitle id="mkt-title" pre="Mercado de" gold="divisas" />} />
           <div className="dash dash--main">
@@ -106,7 +108,7 @@ export default function ForexPage() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="pr-title">
+      <section className="section" id="metodo" data-nav="Método" aria-labelledby="pr-title">
         <div className="container">
           <SectionHead
             eyebrow="Cómo trabajamos"

@@ -21,7 +21,7 @@ export function Marquee() {
 
 export function About() {
   return (
-    <section className="section" id="sobre" aria-labelledby="sobre-title">
+    <section className="section" id="sobre" data-nav="Sobre mí" aria-labelledby="sobre-title">
       <div className="container manifesto">
         <div className="reveal">
           <span className="eyebrow">Sobre Jean Charles</span>
