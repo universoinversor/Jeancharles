@@ -78,3 +78,23 @@ export const impuestos = {
   aviso:
     "Ejemplo ilustrativo. La deducción depende de tu tipo de negocio, de que el gasto sea ordinario y necesario para él, y de tu situación fiscal; los gastos personales (como mejorar tu crédito personal) no son deducibles. Jean Charles no ofrece asesoría fiscal: confirma siempre con tu contador (CPA).",
 };
+
+/** Estrategia de venta al dolor: preguntas que el visitante se responde a sí mismo. */
+export const dolor = {
+  eyebrow: "¿Te identificas?",
+  pre: "Responde con",
+  gold: "honestidad",
+  lead: "Si dices «sí» a una sola de estas preguntas, todavía no estás usando el sistema de Estados Unidos a tu favor.",
+  preguntas: [
+    "¿No tienes un score de crédito de más de 700?",
+    "¿No tienes tarjetas de crédito, o te las negaron?",
+    "¿Todavía no tienes casa propia?",
+    "¿Pagas todo con débito o en efectivo?",
+    "¿Te aprueban préstamos con intereses altísimos, o no te aprueban?",
+  ],
+  debito: {
+    title: "Usar solo débito no construye tu historial",
+    text: "Los pagos con débito no se reportan a Equifax, Experian ni TransUnion: para los bancos es como si no existieras. En Estados Unidos, tu historial de crédito es tu carta de presentación para rentar, comprar casa, financiar un auto o conseguir capital para tu negocio.",
+  },
+  cierre: "Jean Charles te enseña a entender y usar el sistema de crédito americano: cómo funciona, qué mira cada buró y cómo construir tu historial paso a paso.",
+};

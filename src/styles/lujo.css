@@ -179,3 +179,48 @@
 @media (max-width: 999px) { .neuro-art { margin-top: 2.5rem; } }
 @media (min-width: 860px) { .balance--2 { grid-template-columns: repeat(2, 1fr); } }
 .balance--2 .balance__n { font-size: 1rem; letter-spacing: .04em; }
+
+/* ---------- Crédito: preguntas al dolor ---------- */
+.dolor { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.dolor > *, .dolor__lista > li { min-width: 0; }
+@media (min-width: 960px) { .dolor { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; } }
+.dolor__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.dolor__item {
+  width: 100%; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 1rem; align-items: center; text-align: left;
+  padding: 1.1rem 1.25rem; border-radius: 14px; cursor: pointer; color: var(--ivory);
+  font-family: var(--f-display); font-size: var(--step-1); line-height: 1.25;
+  border: 1px solid rgba(224, 184, 74, .16); background: linear-gradient(180deg, #121118, #0b0b10);
+  transition: border-color .4s, box-shadow .4s, transform .4s var(--ease);
+}
+@media (hover: hover) { .dolor__item:hover { border-color: rgba(224, 184, 74, .4); transform: translateX(4px); } }
+.dolor__item.is-on { border-color: rgba(224, 184, 74, .6); box-shadow: 0 0 40px -14px rgba(224, 184, 74, .45), inset 0 1px 0 rgba(255, 244, 206, .12); }
+.dolor__check { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-body); font-size: 1rem; font-weight: 700;
+  border: 1px solid rgba(224, 184, 74, .45); color: #241A04; transition: background .3s; }
+.dolor__item.is-on .dolor__check { background: var(--oro-metal); box-shadow: var(--oro-canto); border-color: transparent; }
+.dolor__si { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.dolor__item.is-on .dolor__si { color: var(--oro-2); }
+@media (max-width: 560px) { .dolor__item { grid-template-columns: 30px minmax(0, 1fr); font-size: 1.08rem; padding: 1rem; } .dolor__si { display: none; } .dolor__resultado { position: static; } }
+.dolor__resultado { position: sticky; top: calc(var(--header-h) + 1rem); padding: 1.75rem; border-radius: var(--radius);
+  border: 1px solid rgba(224, 184, 74, .18); background: radial-gradient(90% 70% at 50% 0%, rgba(242, 217, 139, .08), transparent 70%), linear-gradient(180deg, #121118, #0b0b10);
+  display: grid; gap: .9rem; }
+.dolor__resultado.is-on { border-color: rgba(224, 184, 74, .5); }
+.dolor__n { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.dolor__n b { font-family: var(--f-display); font-size: 3.2rem; font-weight: 500; letter-spacing: 0; margin-right: .3rem;
+  background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); }
+.dolor__ctas { display: flex; flex-wrap: wrap; gap: .7rem; }
+.debito { margin-top: 2rem; padding: 1.75rem 2rem; border-radius: var(--radius); border-left: 3px solid var(--oro-3);
+  background: linear-gradient(90deg, rgba(224, 184, 74, .1), transparent 70%); }
+.debito__tag { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--oro-2); }
+.debito h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--step-2); margin: .5rem 0 .6rem; }
+.debito p { color: var(--ivory-2); max-width: 72ch; }
+
+/* ---------- Ajustes de ancho en celular ---------- */
+.hero__grid > * { min-width: 0; }
+/* palabras largas en Bodoni ("Comunicación") no caben a 320 px con el tamaño h1 completo */
+@media (max-width: 380px) { .h1 { font-size: clamp(2.3rem, 12.5vw, 3.1rem); } }
+/* la tarjeta 3D inclinada sobresale por la perspectiva: en celular va derecha */
+@media (max-width: 600px) { .cardx { transform: none; width: 100%; } }
+.cardx-wrap { grid-template-columns: minmax(0, 1fr); }
+.cardx-wrap > * { min-width: 0; }
+@media (min-width: 960px) { .cardx-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+@media (max-width: 600px) { .cardx__num { font-size: .95rem; letter-spacing: .08em; } }

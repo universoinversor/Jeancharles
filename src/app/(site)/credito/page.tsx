@@ -6,7 +6,8 @@ import { SectionRail } from "@/components/ui/SectionRail";
 import { CreditDiagnostico } from "@/components/widgets/CreditDiagnostico";
 import { CreditGauge } from "@/components/widgets/CreditGauge";
 import { CreditGaugeAnimado } from "@/components/widgets/CreditGaugeAnimado";
-import { beneficios, buros, equilibrio, factores, faqCredito, impuestos, pasos } from "@/content/credito";
+import { CreditDolor } from "@/components/widgets/CreditDolor";
+import { beneficios, buros, dolor, equilibrio, factores, faqCredito, impuestos, pasos } from "@/content/credito";
 import { whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default function CreditoPage() {
         decor={<Monedas set="cripto" />}
         badge="Equifax · Experian · TransUnion"
         title={<GoldTitle as="h1" className="display h1" pre="Crédito" gold="optimizado" />}
-        lead="Tus 3 burós de crédito, alineados con tus ingresos. Jean Charles te enseña cómo funciona el sistema y te acompaña para mejorarlo."
+        lead="¿Vives en Estados Unidos y todavía no tienes un buen score, tarjetas de crédito ni casa propia? Jean Charles te enseña a entender el sistema de crédito americano y a usarlo a tu favor."
       >
         <div className="hero__ctas" style={{ justifyContent: "center", marginTop: "2.5rem", opacity: 1, animation: "none" }}>
           <a href="#diagnostico" className="btn btn--gold btn--magnetic">Hacer mi diagnóstico <span className="arrow" aria-hidden="true">↓</span></a>
@@ -48,6 +49,23 @@ export default function CreditoPage() {
           <p className="form-note">Ejemplo ilustrativo de un plan bien ejecutado. Los resultados varían según cada caso.</p>
         </div>
       </PageHero>
+
+      {/* Al dolor: preguntas */}
+      <section className="section section--line" id="te-identificas" data-nav="¿Te identificas?" aria-labelledby="dolor-title">
+        <div className="container">
+          <SectionHead
+            eyebrow={dolor.eyebrow}
+            title={<GoldTitle id="dolor-title" pre={dolor.pre} gold={dolor.gold} />}
+            lead={dolor.lead}
+          />
+          <CreditDolor />
+          <aside className="debito reveal" aria-labelledby="debito-title">
+            <span className="debito__tag" aria-hidden="true">Débito ≠ Crédito</span>
+            <h3 id="debito-title">{dolor.debito.title}</h3>
+            <p>{dolor.debito.text}</p>
+          </aside>
+        </div>
+      </section>
 
       {/* Los 3 burós */}
       <section className="section section--line" id="buros" data-nav="Tus 3 burós" aria-labelledby="buros-title">
