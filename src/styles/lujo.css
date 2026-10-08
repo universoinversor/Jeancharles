@@ -131,9 +131,11 @@
 @media (min-width: 760px) { .benefits--6 { grid-template-columns: repeat(3, 1fr); } }
 
 .factores { display: grid; gap: 1px; background: rgba(224, 184, 74, .14); border: 1px solid rgba(224, 184, 74, .18); border-radius: var(--radius); overflow: hidden; }
-.factor { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1.25rem; align-items: center; padding: 1.4rem 1.5rem; background: linear-gradient(180deg, #111017, #0a0a0e); }
-.factor__pct { font-family: var(--f-display); font-size: var(--step-4); line-height: 1; background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); filter: var(--oro-relieve-sm); }
-.factor__pct sup { font-family: var(--f-body); font-size: .4em; vertical-align: super; }
+.factor { display: grid; grid-template-columns: 7rem 1fr; gap: 1.25rem; align-items: center; padding: 1.4rem 1.5rem; background: linear-gradient(180deg, #111017, #0a0a0e); }
+/* número dorado recortado y el % aparte en oro sólido: así el % nunca se corta */
+.factor__pct { display: inline-flex; align-items: flex-start; gap: .1em; font-family: var(--f-display); font-size: var(--step-4); line-height: 1; white-space: nowrap; }
+.factor__num { background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); filter: var(--oro-relieve-sm); padding-inline-end: .04em; }
+.factor__pct sup { font-family: var(--f-body); font-weight: 600; font-size: .36em; line-height: 1; margin-top: .25em; color: var(--oro-3); -webkit-text-stroke: 0; }
 .factor h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--step-1); }
 .factor p { color: var(--muted); font-size: .95rem; margin: .2rem 0 .7rem; }
 .factor__bar { display: block; height: 3px; border-radius: 3px; background: rgba(239, 232, 218, .07); overflow: hidden; }
@@ -166,3 +168,7 @@
   font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .gauge-anim__pasos b { color: var(--ivory); font-weight: 500; }
 .gauge-anim__flecha { color: var(--oro-3); }
+@media (max-width: 600px) {
+  .factor { grid-template-columns: 4.4rem 1fr; gap: .9rem; padding: 1.2rem 1.1rem; align-items: start; }
+  .factor__pct { font-size: 2.4rem; }
+}

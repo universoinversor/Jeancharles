@@ -121,7 +121,7 @@ export default function CreditoPage() {
           <div className="factores">
             {factores.map((f, i) => (
               <div className="factor reveal" style={d(`${i * 0.08}s`)} key={f.title}>
-                <span className="factor__pct">{f.pct}<sup>%</sup></span>
+                <span className="factor__pct"><span className="factor__num">{f.pct}</span><sup>%</sup></span>
                 <div>
                   <h3>{f.title}</h3>
                   <p>{f.text}</p>
