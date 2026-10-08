@@ -5,6 +5,7 @@
 @import "../styles/brand.css" layer(components);
 @import "../styles/cinematic.css" layer(components);
 @import "../styles/lujo.css" layer(components);
+@import "../styles/tech.css" layer(components);
 
 /* El padding de la itálica dorada puede asomar 1px: nunca scroll lateral. */
 html { overflow-x: clip; }

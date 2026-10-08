@@ -21,6 +21,8 @@ export default function ForexPage() {
       <section className="hero hero--cinema" id="arriba" data-nav="Inicio" aria-labelledby="fx-title" style={{ minHeight: "92svh" }}>
         <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="grid-lines" aria-hidden="true" />
+        <div className="tech-grid" aria-hidden="true" />
+        <div className="tech-scan" aria-hidden="true" />
         <div className="container hero__grid">
           <div>
             <span className="badge"><span className="live-dot" /> Mercados en vivo</span>

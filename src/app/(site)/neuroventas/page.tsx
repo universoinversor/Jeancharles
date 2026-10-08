@@ -31,6 +31,8 @@ export default function NeuroventasPage() {
       <section className="hero hero--cinema" id="arriba" data-nav="Inicio" aria-labelledby="neuro-title" style={{ minHeight: "88svh" }}>
         <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="grid-lines" aria-hidden="true" />
+        <div className="tech-grid" aria-hidden="true" />
+        <div className="tech-scan" aria-hidden="true" />
         <div className="container hero__grid">
           <div>
             <span className="badge">Neurolingüística · Neuroventas</span>

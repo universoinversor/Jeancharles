@@ -14,6 +14,7 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/allura/400.css";
 import "./globals.css";
+import { TechFx } from "@/components/app/TechFx";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <WhatsAppFloat />
         <Overlays />
         <SiteEffects />
+        <TechFx />
       </body>
     </html>
   );
