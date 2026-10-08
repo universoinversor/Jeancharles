@@ -36,7 +36,7 @@ export function Services() {
         <SectionHead
           eyebrow="Cómo trabajamos juntos"
           title={<h2 className="display h2" id="servicios-title">Servicios</h2>}
-          lead="Cinco formas de acceder al criterio de Jean Charles — desde una sesión estratégica privada hasta un escenario frente a tu equipo."
+          lead="Seis formas de acceder al criterio de Jean Charles — desde una sesión estratégica privada hasta un escenario frente a tu equipo."
         />
         <div className="services">
           {services.map((s, i) => (

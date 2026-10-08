@@ -16,13 +16,14 @@ const NAV = [
   { href: "/forex", label: "Forex" },
   { href: "/crypto", label: "Cripto" },
   { href: "/nipponflex", label: "Nipponflex" },
-  { href: "/#journal", label: "Blog" },
+  { href: "/neuroventas", label: "Neuroventas" },
   { href: "/#contacto", label: "Contacto" },
 ];
-// Solo en el menú móvil (en escritorio: el logo lleva al inicio; Cursos y Miembros viven en el pie).
+// Solo en el menú móvil (en escritorio: el logo lleva al inicio; Cursos, Blog y Miembros viven en el pie).
 const NAV_MOVIL_EXTRA = [
   { href: "/#inicio", label: "Inicio" },
   { href: "/cursos", label: "Cursos" },
+  { href: "/#journal", label: "Blog" },
   { href: "/miembros", label: "Miembros" },
 ];
 

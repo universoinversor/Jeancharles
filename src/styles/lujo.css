@@ -172,3 +172,10 @@
   .factor { grid-template-columns: 4.4rem 1fr; gap: .9rem; padding: 1.2rem 1.1rem; align-items: start; }
   .factor__pct { font-size: 2.4rem; }
 }
+
+/* ---------- Neuroventas ---------- */
+.neuro-art { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid rgba(224, 184, 74, .22); box-shadow: 0 0 80px -20px rgba(224, 184, 74, .35), 0 40px 80px -40px #000; }
+@media (max-width: 999px) { .neuro-art { margin-top: 2.5rem; } }
+@media (min-width: 860px) { .balance--2 { grid-template-columns: repeat(2, 1fr); } }
+.balance--2 .balance__n { font-size: 1rem; letter-spacing: .04em; }
