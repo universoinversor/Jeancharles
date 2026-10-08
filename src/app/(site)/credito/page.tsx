@@ -5,6 +5,7 @@ import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Secti
 import { SectionRail } from "@/components/ui/SectionRail";
 import { CreditDiagnostico } from "@/components/widgets/CreditDiagnostico";
 import { CreditGauge } from "@/components/widgets/CreditGauge";
+import { CreditGaugeAnimado } from "@/components/widgets/CreditGaugeAnimado";
 import { beneficios, buros, equilibrio, factores, faqCredito, impuestos, pasos } from "@/content/credito";
 import { whatsappLink } from "@/lib/site";
 
@@ -41,6 +42,10 @@ export default function CreditoPage() {
         <div className="hero__ctas" style={{ justifyContent: "center", marginTop: "2.5rem", opacity: 1, animation: "none" }}>
           <a href="#diagnostico" className="btn btn--gold btn--magnetic">Hacer mi diagnóstico <span className="arrow" aria-hidden="true">↓</span></a>
           <DialogLink dialog="consulta" servicio="credito" className="btn btn--magnetic">Agendar asesoría</DialogLink>
+        </div>
+        <div className="panel credito-hero__gauge">
+          <CreditGaugeAnimado desde={650} hasta={750} />
+          <p className="form-note">Ejemplo ilustrativo de un plan bien ejecutado. Los resultados varían según cada caso.</p>
         </div>
       </PageHero>
 

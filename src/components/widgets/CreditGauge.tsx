@@ -14,7 +14,8 @@ const arc = (t1: number, t2: number) => {
 const tOf = (v: number) => (Math.min(MAX, Math.max(MIN, v)) - MIN) / (MAX - MIN);
 
 /** Velocímetro de puntaje (300–850) con los rangos de color y la aguja. */
-export function CreditGauge({ score, bureau, note }: { score: number; bureau: string; note?: string }) {
+/** `progreso`: si se indica, pinta en oro el tramo ganado desde ese valor hasta `score`. */
+export function CreditGauge({ score, bureau, note, progreso }: { score: number; bureau: string; note?: string; progreso?: number }) {
   const r = rangoDe(score);
   const t = tOf(score);
   const [nx, ny] = pt(t, R - 30);
@@ -29,6 +30,9 @@ export function CreditGauge({ score, bureau, note }: { score: number; bureau: st
           const [x, y] = pt(tOf(v), R + 17);
           return <text key={v} x={x} y={y + 3} textAnchor="middle" className="gauge__tick">{v}</text>;
         })}
+        {progreso !== undefined && score > progreso ? (
+          <path d={arc(tOf(progreso), tOf(score))} fill="none" stroke="#FFF4CE" strokeWidth="4" strokeLinecap="round" className="gauge__ganado" />
+        ) : null}
         <line x1={CX} y1={CY} x2={nx} y2={ny} stroke="#F2D98B" strokeWidth="4" strokeLinecap="round" />
         <circle cx={CX} cy={CY} r="44" fill="#0b0b10" stroke="rgba(224,184,74,.35)" />
         <text x={CX} y={CY + 11} textAnchor="middle" className="gauge__score">{score}</text>

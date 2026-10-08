@@ -156,3 +156,13 @@
 .tax__row--total { border-bottom: 0; padding-top: 1.2rem; flex-wrap: wrap; }
 .tax__row--total b.calc__big { font-size: var(--step-3); }
 .tax .form-note { margin-top: 1rem; }
+
+/* Velocímetro animado (650 → 750) en la portada de Crédito */
+.credito-hero__gauge { width: min(100%, 440px); margin: 3rem auto 0; padding: 1.75rem 1.5rem 1.25rem; text-align: center; }
+.credito-hero__gauge .form-note { margin-top: .9rem; }
+.gauge-anim .gauge svg { max-width: 340px; }
+.gauge__ganado { filter: drop-shadow(0 0 6px rgba(255, 244, 206, .9)) drop-shadow(0 0 14px rgba(224, 184, 74, .6)); }
+.gauge-anim__pasos { display: flex; justify-content: center; align-items: center; gap: .9rem; flex-wrap: wrap; margin-top: .6rem;
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.gauge-anim__pasos b { color: var(--ivory); font-weight: 500; }
+.gauge-anim__flecha { color: var(--oro-3); }
