@@ -34,7 +34,7 @@ export default function EntregaPage() {
           <article className="entrega-carta panel reveal">
             <p className="entrega-carta__saludo">{entrega.saludo}</p>
             {entrega.mensaje.map((p) => <p key={p}>{p}</p>)}
-            <p className="entrega-carta__firma">{entrega.firma}<span>{entrega.equipo}</span></p>
+            <p className="entrega-carta__firma">{entrega.firma}<span>{entrega.autor}</span><small>{entrega.equipo}</small></p>
           </article>
         </div>
       </section>
