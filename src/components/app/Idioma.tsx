@@ -77,7 +77,7 @@ function restaurar() {
 
 let observer: MutationObserver | null = null;
 function aplicar(lang: Lang) {
-  document.documentElement.lang = lang;
+  document.documentElement.lang = lang === "es" ? "es-MX" : "en-US";
   observer?.disconnect();
   observer = null;
   if (lang === "es") { restaurar(); return; }
@@ -116,6 +116,29 @@ export function Idioma() {
 }
 
 /** Selector ES | EN (en el menú). */
+/** Banderas en SVG (los emoji de bandera no se ven en Windows). */
+const OPCION: Record<Lang, { nombre: string; bandera: React.ReactNode }> = {
+  es: {
+    nombre: "Español (México)",
+    bandera: (
+      <svg className="idioma__flag" viewBox="0 0 30 20" aria-hidden="true">
+        <rect width="10" height="20" fill="#006847" /><rect x="10" width="10" height="20" fill="#fff" /><rect x="20" width="10" height="20" fill="#ce1126" />
+        <circle cx="15" cy="10" r="2.6" fill="#8c5a2b" />
+      </svg>
+    ),
+  },
+  en: {
+    nombre: "English (United States)",
+    bandera: (
+      <svg className="idioma__flag" viewBox="0 0 30 20" aria-hidden="true">
+        <rect width="30" height="20" fill="#b22234" />
+        {[1, 3, 5, 7, 9, 11].map((i) => <rect key={i} y={(i * 20) / 13} width="30" height={20 / 13} fill="#fff" />)}
+        <rect width="13" height={(20 * 7) / 13} fill="#3c3b6e" />
+      </svg>
+    ),
+  },
+};
+
 export function SelectorIdioma({ className = "" }: { className?: string }) {
   const [lang, setLang] = useState<Lang>("es");
   useEffect(() => {
@@ -127,8 +150,10 @@ export function SelectorIdioma({ className = "" }: { className?: string }) {
   return (
     <div className={`idioma ${className}`} role="group" aria-label="Idioma / Language" data-no-traducir>
       {(["es", "en"] as const).map((l) => (
-        <button key={l} type="button" aria-pressed={lang === l} className={lang === l ? "is-on" : undefined} onClick={() => cambiarIdioma(l)}>
-          {l.toUpperCase()}
+        <button key={l} type="button" aria-pressed={lang === l} className={lang === l ? "is-on" : undefined} onClick={() => cambiarIdioma(l)}
+          title={OPCION[l].nombre} aria-label={OPCION[l].nombre}>
+          {OPCION[l].bandera}
+          <span aria-hidden="true">{l.toUpperCase()}</span>
         </button>
       ))}
     </div>
