@@ -10,7 +10,8 @@ export const entrega = {
     "Gracias por la confianza. Este es apenas el comienzo: la web está lista para crecer contigo con cursos, pagos y tu comunidad de miembros.",
   ],
   firma: "Con gratitud,",
-  equipo: "Tu equipo web",
+  autor: "Edwin Muñoz",
+  equipo: "EDAMI · Tu equipo web",
   incluye: [
     { title: "Portada cinematográfica", text: "Intro, video y polvo de oro: la primera impresión que tu marca merece." },
     { title: "Español e inglés", text: "Todo el sitio cambia de idioma con un toque y recuerda la preferencia del visitante." },

@@ -233,3 +233,4 @@
 .entrega-carta__saludo { font-family: var(--f-display); font-size: 1.7rem; font-style: italic; color: var(--oro-2); }
 .entrega-carta__firma { margin-top: .8rem; display: grid; gap: .2rem; }
 .entrega-carta__firma span { font-family: var(--f-sign); font-size: 2.2rem; color: var(--oro-3); line-height: 1.2; }
+.entrega-carta__firma small { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .24em; text-transform: uppercase; color: var(--oro-3); }
