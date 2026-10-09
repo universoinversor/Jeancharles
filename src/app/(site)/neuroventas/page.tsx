@@ -6,6 +6,7 @@ import { CtaBand, GoldTitle, SectionHead } from "@/components/ui/Section";
 import { SectionRail } from "@/components/ui/SectionRail";
 import { aplicaciones, faqNeuro, formatos, neuroIntro, pilares, recorrido } from "@/content/neuroventas";
 import { whatsappLink } from "@/lib/site";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export const metadata: Metadata = {
   title: "Neuroventas & PNL — Comunicación que conecta, ventas que cierran",
@@ -109,7 +110,8 @@ export default function NeuroventasPage() {
       </section>
 
       {/* Aplicaciones */}
-      <section className="section section--line" id="aplicaciones" data-nav="Dónde aplicarlo" aria-labelledby="apl-title">
+      <section className="section section--line has-fondo" id="aplicaciones" data-nav="Dónde aplicarlo" aria-labelledby="apl-title">
+        <FondoLujo img="ciudad" />
         <div className="container">
           <SectionHead
             eyebrow="Dónde se aplica"

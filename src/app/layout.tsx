@@ -16,6 +16,7 @@ import "@fontsource/allura/400.css";
 import "./globals.css";
 import { TechFx } from "@/components/app/TechFx";
 import { MotorGrafico } from "@/components/app/MotorGrafico";
+import { Idioma } from "@/components/app/Idioma";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Overlays />
         <SiteEffects />
         <TechFx />
+        <Idioma />
       </body>
     </html>
   );

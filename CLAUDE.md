@@ -66,6 +66,10 @@ Next.js 16 (App Router, `src/`) · React 19 · TypeScript · Tailwind v4 · Supa
   El movimiento del fondo es la **aurora dorada** (`.aurora`, CSS puro) + `<GoldDust>`; fondo noche `--night #05050c`.
 - Estilo: lujo extravagante y MUY visual — imágenes grandes, oro con brillo, polvo de oro (`<GoldDust>`).
   Capa en `src/styles/cinematic.css` (aurora, hero, `.crest` con reflejo, `.cinema` con escudo gigante, `.universe`).
+- Inglés/español: `<Idioma />` traduce en el navegador con el diccionario `src/lib/i18n/en.ts` (clave = texto
+  exacto en español). Al agregar o cambiar textos, agregar su traducción ahí. Selector `<SelectorIdioma />` en el menú.
+- Fondos de lujo a medio ver: `<FondoLujo img="villa" />` + clase `has-fondo` en la sección (imágenes en
+  `src/content/fondos.ts`, desenfoque y paralaje por CSS).
 - Motor gráfico `<MotorGrafico />` (WebGL2 propio, sin librerías, en el layout): universo de partículas de oro
   en 3D detrás de todo; galaxia ↔ onda según el scroll, cámara con el mouse, onda expansiva al hacer clic.
   Por eso las secciones usan fondos traslúcidos. Se pausa en pestaña oculta; reduced-motion = un cuadro fijo.

@@ -9,6 +9,7 @@ import { CreditGaugeAnimado } from "@/components/widgets/CreditGaugeAnimado";
 import { CreditDolor } from "@/components/widgets/CreditDolor";
 import { beneficios, buros, dolor, equilibrio, factores, faqCredito, impuestos, pasos } from "@/content/credito";
 import { whatsappLink } from "@/lib/site";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export const metadata: Metadata = {
   title: "Crédito optimizado — Tus 3 burós alineados con tus ingresos",
@@ -51,7 +52,8 @@ export default function CreditoPage() {
       </PageHero>
 
       {/* Al dolor: preguntas */}
-      <section className="section section--line" id="te-identificas" data-nav="¿Te identificas?" aria-labelledby="dolor-title">
+      <section className="section section--line has-fondo" id="te-identificas" data-nav="¿Te identificas?" aria-labelledby="dolor-title">
+        <FondoLujo img="casa" />
         <div className="container">
           <SectionHead
             eyebrow={dolor.eyebrow}
@@ -107,7 +109,8 @@ export default function CreditoPage() {
       </section>
 
       {/* Beneficios */}
-      <section className="section" id="beneficios" data-nav="Beneficios" aria-labelledby="beneficios-title">
+      <section className="section has-fondo" id="beneficios" data-nav="Beneficios" aria-labelledby="beneficios-title">
+        <FondoLujo img="villa" />
         <div className="container">
           <SectionHead
             eyebrow="Lo que se abre con un buen crédito"

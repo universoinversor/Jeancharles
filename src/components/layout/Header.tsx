@@ -7,6 +7,7 @@ import { Brand } from "@/components/ui/Brand";
 import { Socials } from "@/components/ui/Socials";
 import { openDialog } from "@/lib/ui-events";
 import { useActiveSection } from "@/lib/use-active-section";
+import { SelectorIdioma } from "@/components/app/Idioma";
 
 // Como el sitio original: secciones de la home (#) y páginas propias, en el orden de lectura.
 const NAV = [
@@ -86,8 +87,10 @@ export function Header() {
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} aria-current={current(n.href)}>{n.label}</Link>
             ))}
+            <SelectorIdioma />
             <a href="#consulta" className="btn btn--gold btn--sm" onClick={book}>Agendar</a>
           </nav>
+          <SelectorIdioma className="idioma--movil" />
           <button
             className="menu-toggle"
             type="button"
@@ -111,6 +114,7 @@ export function Header() {
         </nav>
         <div className="mobile-menu__foot">
           <a href="#consulta" className="btn btn--gold" onClick={book}>Agendar consultoría</a>
+          <SelectorIdioma />
           <Socials />
         </div>
       </div>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { GoldTitle, SectionHead } from "@/components/ui/Section";
 import { journey, pillars, services } from "@/content/home";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 
@@ -31,7 +32,8 @@ export function Method() {
 
 export function Services() {
   return (
-    <section className="section section--raised" id="servicios" data-nav="Servicios" aria-labelledby="servicios-title">
+    <section className="section section--raised has-fondo" id="servicios" data-nav="Servicios" aria-labelledby="servicios-title">
+      <FondoLujo img="reloj" />
       <div className="container">
         <SectionHead
           eyebrow="Cómo trabajamos juntos"

@@ -110,3 +110,73 @@
 .section--raised { background: rgba(13, 13, 17, .62); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 .hero--cinema { background: radial-gradient(120% 90% at 70% 30%, rgba(10, 10, 22, .55), rgba(5, 5, 12, .82)); }
 .market-strip { background: rgba(13, 13, 17, .78); }
+
+/* ---------- Fondos de lujo a medio ver (paralaje + desenfoque) ---------- */
+.has-fondo { overflow: clip; }
+.has-fondo > :not(.fondo-lujo):not(.monedas) { position: relative; z-index: 1; }
+.fondo-lujo {
+  position: absolute; inset: -14% 0; z-index: 0; pointer-events: none;
+  background-size: cover; background-repeat: no-repeat;
+  filter: blur(6px) saturate(.75) sepia(.35) brightness(.55) contrast(1.05);
+  opacity: .26; transform: scale(1.1);
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 50%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(120% 85% at 50% 50%, #000 30%, transparent 85%);
+}
+/* paralaje con la línea de tiempo del scroll (sin JavaScript) */
+@supports (animation-timeline: view()) {
+  .fondo-lujo { animation: fondo-paralaje linear both; animation-timeline: view(); animation-range: cover; }
+  @keyframes fondo-paralaje {
+    from { transform: translateY(-9%) scale(1.12); filter: blur(10px) saturate(.7) sepia(.35) brightness(.5); }
+    50% { filter: blur(5px) saturate(.8) sepia(.3) brightness(.6); }
+    to { transform: translateY(9%) scale(1.12); filter: blur(10px) saturate(.7) sepia(.35) brightness(.5); }
+  }
+}
+@media (max-width: 760px) { .fondo-lujo { opacity: .2; inset: -8% 0; } }
+
+/* ---------- Botones de lujo ---------- */
+/* Dorado: un destello de luz lo cruza cada pocos segundos; al pasar el cursor se eleva y brilla */
+.btn--gold::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .65) 48%, transparent 62%) -160% 0 / 60% 100% no-repeat;
+  animation: btn-destello 4.5s var(--ease) infinite;
+}
+@keyframes btn-destello { 0%, 55% { background-position: -160% 0; } 100% { background-position: 260% 0; } }
+.btn--gold:hover { transform: translateY(-2px); }
+.btn--gold:hover::after { animation-duration: 1.4s; }
+
+/* Secundario: un filo dorado recorre el borde al pasar el cursor */
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+.btn:not(.btn--gold)::after {
+  content: ""; position: absolute; inset: -1px; z-index: 2; pointer-events: none; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from var(--ang), transparent 0 70%, #F2D98B 82%, #FFF4CE 88%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+  opacity: 0; transition: opacity .4s;
+}
+.btn:not(.btn--gold):hover::after, .btn:not(.btn--gold):focus-visible::after { opacity: 1; animation: btn-filo 1.6s linear infinite; }
+@keyframes btn-filo { to { --ang: 360deg; } }
+.btn:not(.btn--gold) { transition: color .4s var(--ease), border-color .4s var(--ease), transform .4s var(--ease), box-shadow .4s; }
+.btn:not(.btn--gold):hover { transform: translateY(-2px); box-shadow: 0 14px 40px -16px rgba(224, 184, 74, .45); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fondo-lujo { animation: none; }
+  .btn--gold::after, .btn:not(.btn--gold):hover::after { animation: none; }
+}
+
+/* ---------- Selector de idioma ES | EN ---------- */
+.idioma { display: inline-flex; padding: 3px; border-radius: 999px; border: 1px solid rgba(224, 184, 74, .3); background: rgba(7, 7, 10, .5); }
+.idioma button {
+  font-family: var(--f-mono); font-size: .66rem; letter-spacing: .14em; padding: .38rem .6rem; border-radius: 999px;
+  color: var(--ivory-2); transition: color .3s, background .3s, box-shadow .3s;
+}
+.idioma button:hover { color: var(--ivory); }
+.idioma button.is-on { color: #241A04; background: var(--oro-metal-h); box-shadow: var(--oro-canto); }
+.site-header .idioma--movil { display: inline-flex; margin-left: auto; margin-right: .6rem; }
+@media (min-width: 1240px) { .site-header .idioma--movil { display: none; } }
+/* Cabecera en celular: escudo + selector + menú sin encimarse */
+@media (max-width: 1239.98px) { .site-header .container { gap: .75rem; } }
+@media (max-width: 440px) {
+  .site-header .brand-lockup__word { display: none; }
+  .site-header .idioma--movil { margin-right: .4rem; }
+  .idioma button { padding: .34rem .5rem; }
+}

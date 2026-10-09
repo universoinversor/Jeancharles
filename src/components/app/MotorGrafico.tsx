@@ -14,7 +14,7 @@ import { useEffect, useRef } from "react";
 const VERT = `#version 300 es
 precision highp float;
 in vec3 aSeed;
-uniform float uTime, uMorph, uAspect, uPx, uScroll;
+uniform float uTime, uMorph, uAspect, uPx, uScroll, uIntensity;
 uniform vec2 uMouse, uRot;
 uniform vec3 uClick;
 out float vAlpha;
@@ -48,7 +48,7 @@ void main(){
   // Repulsión del mouse (en pantalla)
   vec2 ndc = pos.xy / pos.w;
   vec2 d = (ndc - uMouse) * vec2(uAspect, 1.);
-  float push = exp(-dot(d, d) * 18.) * .09;
+  float push = exp(-dot(d, d) * 18.) * .05;
   ndc += normalize(d + 1e-5) * push / vec2(uAspect, 1.);
 
   // Onda expansiva del clic
@@ -57,16 +57,19 @@ void main(){
     vec2 dc = (ndc - uClick.xy) * vec2(uAspect, 1.);
     float dist = length(dc), ring = age * 1.1;
     float band = exp(-pow((dist - ring) * 9., 2.)) * exp(-age * 1.4);
-    ndc += normalize(dc + 1e-5) * band * .12 / vec2(uAspect, 1.);
+    ndc += normalize(dc + 1e-5) * band * .06 / vec2(uAspect, 1.);
   }
   pos.xy = ndc * pos.w;
   gl_Position = pos;
 
   float tw = .55 + .45 * sin(uTime * (1.2 + aSeed.z * 2.) + aSeed.x * 60.);
-  gl_PointSize = (1.4 + aSeed.z * 3.0) * uPx * (2.2 / pos.w) * (.7 + .3 * tw);
+  gl_PointSize = (1.0 + aSeed.z * 2.2) * uPx * (2.2 / pos.w) * (.7 + .3 * tw);
   float chispa = step(.985, fract(aSeed.y * 97.3));
-  vColor = mix(mix(vec3(.56,.40,.09), vec3(.95,.85,.55), aSeed.z), vec3(1.,.96,.82), chispa);
-  vAlpha = clamp((.35 + .65 * tw) * (1.8 / pos.w), 0., 1.) * (.8 + chispa * .6);
+  // blanco y oro: un tercio de las partículas son blancas (platino), el resto en la rampa de oro
+  float blanca = step(.66, fract(aSeed.x * 53.1));
+  vec3 oro = mix(vec3(.62,.45,.12), vec3(.96,.86,.56), aSeed.z);
+  vColor = mix(mix(oro, vec3(.93,.93,.96), blanca), vec3(1.), chispa);
+  vAlpha = clamp((.22 + .4 * tw) * (1.5 / pos.w), 0., 1.) * (.6 + chispa * .4) * uIntensity;
 }`;
 
 const FRAG = `#version 300 es
@@ -110,7 +113,7 @@ export function MotorGrafico() {
     gl.useProgram(prog);
 
     const mobile = matchMedia("(max-width: 760px)").matches;
-    const N = mobile ? 5000 : 14000;
+    const N = mobile ? 2600 : 6500;
     const seeds = new Float32Array(N * 3);
     for (let i = 0; i < seeds.length; i++) seeds[i] = Math.random();
     const buf = gl.createBuffer();
@@ -121,7 +124,7 @@ export function MotorGrafico() {
     gl.vertexAttribPointer(loc, 3, gl.FLOAT, false, 0, 0);
 
     const u = (n: string) => gl.getUniformLocation(prog, n);
-    const U = { time: u("uTime"), morph: u("uMorph"), aspect: u("uAspect"), px: u("uPx"), scroll: u("uScroll"), mouse: u("uMouse"), rot: u("uRot"), click: u("uClick") };
+    const U = { intensity: u("uIntensity"), time: u("uTime"), morph: u("uMorph"), aspect: u("uAspect"), px: u("uPx"), scroll: u("uScroll"), mouse: u("uMouse"), rot: u("uRot"), click: u("uClick") };
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE);
@@ -163,8 +166,11 @@ export function MotorGrafico() {
       gl.uniform1f(U.aspect, w / h);
       gl.uniform1f(U.px, dpr * (mobile ? 1.6 : 1.9));
       gl.uniform1f(U.scroll, sp);
+      // Sutil en la portada y casi imperceptible en el resto: acompaña, no compite con el contenido.
+      const intensidad = 0.16 + 0.4 * Math.max(0, 1 - scrollY / (innerHeight * 0.9));
+      gl.uniform1f(U.intensity, intensidad);
       gl.uniform2f(U.mouse, mouse.x, mouse.y);
-      gl.uniform2f(U.rot, mouse.x * 0.35, -mouse.y * 0.18);
+      gl.uniform2f(U.rot, mouse.x * 0.18, -mouse.y * 0.1);
       gl.uniform3f(U.click, click[0], click[1], click[2]);
       gl.drawArrays(gl.POINTS, 0, N);
       if (!reduce) raf = requestAnimationFrame(draw);

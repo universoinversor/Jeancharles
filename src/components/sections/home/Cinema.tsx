@@ -4,6 +4,7 @@ import { GoldTitle, SectionHead } from "@/components/ui/Section";
 import { cinema, universe } from "@/content/home";
 import { OroArt } from "@/components/ui/OroArt";
 import { Monedas } from "@/components/ui/Monedas";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 /** Banda a sangre con un fotograma del logo reveal y una frase en grande. */
 export function CinemaBand() {
@@ -28,7 +29,8 @@ export function CinemaBand() {
 /** Mosaico de imágenes grandes con las áreas de la marca. */
 export function Universe() {
   return (
-    <section className="section" id="universo" data-nav="Universo JC" aria-labelledby="universo-title">
+    <section className="section has-fondo" id="universo" data-nav="Universo JC" aria-labelledby="universo-title">
+      <FondoLujo img="villa" />
       <Monedas set="seccion" />
       <div className="container">
         <SectionHead
