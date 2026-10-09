@@ -1,5 +1,6 @@
 import { GoldTitle } from "@/components/ui/Section";
 import { aboutStats, quote, specialties } from "@/content/home";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export function Marquee() {
   const group = (hidden: boolean) => (
@@ -21,7 +22,8 @@ export function Marquee() {
 
 export function About() {
   return (
-    <section className="section" id="sobre" data-nav="Sobre mí" aria-labelledby="sobre-title">
+    <section className="section has-fondo" id="sobre" data-nav="Sobre mí" aria-labelledby="sobre-title">
+      <FondoLujo img="ciudad" />
       <div className="container manifesto">
         <div className="reveal">
           <span className="eyebrow">Sobre Jean Charles</span>

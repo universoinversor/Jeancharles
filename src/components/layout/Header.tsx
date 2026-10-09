@@ -7,21 +7,24 @@ import { Brand } from "@/components/ui/Brand";
 import { Socials } from "@/components/ui/Socials";
 import { openDialog } from "@/lib/ui-events";
 import { useActiveSection } from "@/lib/use-active-section";
+import { SelectorIdioma } from "@/components/app/Idioma";
 
 // Como el sitio original: secciones de la home (#) y páginas propias, en el orden de lectura.
 const NAV = [
-  { href: "/#inicio", label: "Inicio" },
   { href: "/#sobre", label: "Sobre mí" },
   { href: "/#servicios", label: "Servicios" },
+  { href: "/credito", label: "Crédito" },
   { href: "/forex", label: "Forex" },
   { href: "/crypto", label: "Cripto" },
   { href: "/nipponflex", label: "Nipponflex" },
-  { href: "/#journal", label: "Blog" },
+  { href: "/neuroventas", label: "Neuroventas" },
   { href: "/#contacto", label: "Contacto" },
 ];
-// Solo en el menú móvil (en escritorio viven en el pie y en "Universo JC").
+// Solo en el menú móvil (en escritorio: el logo lleva al inicio; Cursos, Blog y Miembros viven en el pie).
 const NAV_MOVIL_EXTRA = [
+  { href: "/#inicio", label: "Inicio" },
   { href: "/cursos", label: "Cursos" },
+  { href: "/#journal", label: "Blog" },
   { href: "/miembros", label: "Miembros" },
 ];
 
@@ -84,8 +87,10 @@ export function Header() {
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} aria-current={current(n.href)}>{n.label}</Link>
             ))}
+            <SelectorIdioma />
             <a href="#consulta" className="btn btn--gold btn--sm" onClick={book}>Agendar</a>
           </nav>
+          <SelectorIdioma className="idioma--movil" />
           <button
             className="menu-toggle"
             type="button"
@@ -109,6 +114,7 @@ export function Header() {
         </nav>
         <div className="mobile-menu__foot">
           <a href="#consulta" className="btn btn--gold" onClick={book}>Agendar consultoría</a>
+          <SelectorIdioma />
           <Socials />
         </div>
       </div>

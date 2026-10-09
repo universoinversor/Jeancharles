@@ -6,6 +6,7 @@ import { CryptoCalculator } from "@/components/widgets/CryptoCalculator";
 import { partners } from "@/lib/site";
 import { SectionRail } from "@/components/ui/SectionRail";
 import { Monedas } from "@/components/ui/Monedas";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export const metadata: Metadata = {
   title: "Cripto Terminal — Mercados en tiempo real",
@@ -118,7 +119,8 @@ export default function CryptoPage() {
       </section>
 
       {/* Tarjeta cripto */}
-      <section className="section section--line" id="tarjeta" data-nav="Tarjeta" aria-labelledby="card-title">
+      <section className="section section--line has-fondo" id="tarjeta" data-nav="Tarjeta" aria-labelledby="card-title">
+        <FondoLujo img="deportivo" />
         <div className="container cardx-wrap">
           <div className="cardx reveal" aria-hidden="true">
             <div className="cardx__chip" />

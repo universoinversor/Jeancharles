@@ -47,6 +47,8 @@ export const services = [
   { title: "Asesorías personalizadas", text: "De inversión y emprendimiento de negocios: consultoría estratégica para maximizar tus inversiones y hacer crecer tu negocio con enfoque personalizado.", dialog: "consulta", servicio: "mentoria" },
   { title: "Cursos especializados", text: "En crecimiento de negocios y marketing: formación con estrategias probadas para escalar tu negocio y dominar el marketing digital.", href: "/cursos" },
   { title: "Conferencias empresariales", text: "Conferencista profesional con más de 10 años de experiencia: charlas motivacionales y estratégicas que inspiran transformación y resultados medibles.", dialog: "consulta", servicio: "conferencias" },
+  { title: "Crédito optimizado", text: "Tus 3 burós (Equifax, Experian y TransUnion) alineados con tus ingresos: diagnóstico, plan y acompañamiento para mejorar tu puntaje.", href: "/credito" },
+  { title: "Neuroventas & PNL", text: "Neurolingüística y neuroventas: comunicación que conecta, manejo de objeciones y cierre ético para vender, liderar y presentar.", href: "/neuroventas" },
   { title: "Marketing especializado", text: "Un equipo de marketing completo para impulsar tu negocio: estrategias digitales integrales que generan leads y aumentan las ventas.", dialog: "consulta", servicio: "mentoria" },
 ] as const;
 

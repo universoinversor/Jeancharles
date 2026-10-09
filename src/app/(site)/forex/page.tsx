@@ -6,6 +6,7 @@ import { TradingView } from "@/components/widgets/TradingView";
 import { FOREX_TICKER, forexPrinciples, forexServices } from "@/content/forex";
 import { whatsappLink } from "@/lib/site";
 import { SectionRail } from "@/components/ui/SectionRail";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export const metadata: Metadata = {
   title: "Forex Dashboard — Gestión de inversiones",
@@ -21,6 +22,8 @@ export default function ForexPage() {
       <section className="hero hero--cinema" id="arriba" data-nav="Inicio" aria-labelledby="fx-title" style={{ minHeight: "92svh" }}>
         <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
         <div className="grid-lines" aria-hidden="true" />
+        <div className="tech-grid" aria-hidden="true" />
+        <div className="tech-scan" aria-hidden="true" />
         <div className="container hero__grid">
           <div>
             <span className="badge"><span className="live-dot" /> Mercados en vivo</span>
@@ -46,7 +49,8 @@ export default function ForexPage() {
 
       <TradingView kind="ticker-tape" className="market-strip" config={FOREX_TICKER} />
 
-      <section className="section" id="servicios-fx" data-nav="Servicios" aria-labelledby="svc-title">
+      <section className="section has-fondo" id="servicios-fx" data-nav="Servicios" aria-labelledby="svc-title">
+        <FondoLujo img="rascacielos" />
         <div className="container">
           <SectionHead
             eyebrow="Servicios élite"

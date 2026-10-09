@@ -68,7 +68,7 @@
 @media (max-width: 760px) {
     .monedas .moneda:nth-child(n + 3) { display: none; }
     .moneda { --s: 34px !important; }
-    .hero > .monedas { display: none; } /* en el celular el título manda: el polvo de oro basta */
+    .hero > .monedas, .page-hero > .monedas { display: none; } /* en el celular el título manda */
 }
 
 /* El hero y las secciones con monedas: el contenido siempre por encima. */
@@ -98,6 +98,132 @@
 .split__media > .oro-art { position: absolute; inset: 0; }
 
 @media (prefers-reduced-motion: reduce) { .moneda { animation: none; } }
+
+/* ---------- Crédito optimizado ---------- */
+.gauges { display: grid; gap: 1.25rem; }
+@media (min-width: 860px) { .gauges { grid-template-columns: repeat(3, 1fr); } }
+.gauges__item { padding: 1.5rem 1.25rem 1.25rem; }
+.gauge { margin: 0; display: grid; gap: .6rem; justify-items: center; }
+.gauge svg { width: 100%; max-width: 300px; height: auto; overflow: visible; }
+.gauge__tick { font-family: var(--f-mono); font-size: 9px; fill: rgba(239, 232, 218, 0.45); }
+.gauge__score { font-family: var(--f-display); font-size: 40px; font-weight: 600; fill: var(--ivory); }
+.gauge__label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.gauge figcaption { display: grid; justify-items: center; gap: .2rem; }
+.gauge figcaption b { font-family: var(--f-display); font-size: var(--step-1); font-weight: 500; }
+.gauge figcaption span { font-family: var(--f-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+.balance { display: grid; gap: 1.25rem; margin-top: 1rem; }
+@media (min-width: 860px) {
+  .balance { grid-template-columns: repeat(3, 1fr); position: relative; }
+  .balance::before { content: ""; position: absolute; left: 8%; right: 8%; top: 50%; height: 1px; background: linear-gradient(90deg, transparent, var(--oro-3), transparent); opacity: .5; z-index: 0; }
+}
+.balance__item {
+  position: relative; z-index: 1; text-align: center; padding: 2.4rem 1.75rem; border-radius: var(--radius);
+  border: 1px solid rgba(224, 184, 74, .22);
+  background: radial-gradient(90% 70% at 50% 0%, rgba(242, 217, 139, .1), transparent 70%), linear-gradient(180deg, #121118, #0b0b10);
+  box-shadow: inset 0 1px 0 rgba(255, 244, 206, .1), 0 30px 60px -30px #000;
+}
+.balance__n { display: inline-grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; margin-bottom: 1.1rem;
+  font-family: var(--f-display); font-size: 1.3rem; color: #241A04; background: var(--oro-metal); box-shadow: var(--oro-canto); }
+.balance__item h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--step-2); margin-bottom: .5rem; }
+.balance__item p { color: var(--muted); }
+
+@media (min-width: 760px) { .benefits--6 { grid-template-columns: repeat(3, 1fr); } }
+
+.factores { display: grid; gap: 1px; background: rgba(224, 184, 74, .14); border: 1px solid rgba(224, 184, 74, .18); border-radius: var(--radius); overflow: hidden; }
+.factor { display: grid; grid-template-columns: 7rem 1fr; gap: 1.25rem; align-items: center; padding: 1.4rem 1.5rem; background: linear-gradient(180deg, #111017, #0a0a0e); }
+/* número dorado recortado y el % aparte en oro sólido: así el % nunca se corta */
+.factor__pct { display: inline-flex; align-items: flex-start; gap: .1em; font-family: var(--f-display); font-size: var(--step-4); line-height: 1; white-space: nowrap; }
+.factor__num { background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); filter: var(--oro-relieve-sm); padding-inline-end: .04em; }
+.factor__pct sup { font-family: var(--f-body); font-weight: 600; font-size: .36em; line-height: 1; margin-top: .25em; color: var(--oro-3); -webkit-text-stroke: 0; }
+.factor h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--step-1); }
+.factor p { color: var(--muted); font-size: .95rem; margin: .2rem 0 .7rem; }
+.factor__bar { display: block; height: 3px; border-radius: 3px; background: rgba(239, 232, 218, .07); overflow: hidden; }
+.factor__bar i { display: block; height: 100%; background: var(--oro-metal-h); box-shadow: 0 0 10px rgba(224, 184, 74, .5); }
+
+.form-grid--3 { display: grid; gap: 1rem; }
+@media (min-width: 640px) { .form-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+.diag__grid { display: grid; gap: 1.25rem; }
+@media (min-width: 640px) { .diag__grid { grid-template-columns: 1fr 1fr; } }
+.diag__grid > div { display: grid; gap: .3rem; }
+.diag__sub { font-size: .78rem; }
+.diag__tips { margin-top: 1rem; }
+.calc__big.is-up { background: none; -webkit-text-fill-color: var(--up); filter: none; }
+.calc__big.is-mid { background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; }
+
+.tax { display: grid; align-content: center; gap: .2rem; background: radial-gradient(80% 70% at 70% 20%, rgba(242, 217, 139, .1), transparent 70%); }
+.tax__row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.tax__row span { color: var(--muted); }
+.tax__row b { font-family: var(--f-display); font-weight: 500; font-size: var(--step-1); }
+.tax__row--total { border-bottom: 0; padding-top: 1.2rem; flex-wrap: wrap; }
+.tax__row--total b.calc__big { font-size: var(--step-3); }
+.tax .form-note { margin-top: 1rem; }
+
+/* Velocímetro animado (650 → 750) en la portada de Crédito */
+.credito-hero__gauge { width: min(100%, 440px); margin: 3rem auto 0; padding: 1.75rem 1.5rem 1.25rem; text-align: center; }
+.credito-hero__gauge .form-note { margin-top: .9rem; }
+.gauge-anim .gauge svg { max-width: 340px; }
+.gauge__ganado { filter: drop-shadow(0 0 6px rgba(255, 244, 206, .9)) drop-shadow(0 0 14px rgba(224, 184, 74, .6)); }
+.gauge-anim__pasos { display: flex; justify-content: center; align-items: center; gap: .9rem; flex-wrap: wrap; margin-top: .6rem;
+  font-family: var(--f-mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.gauge-anim__pasos b { color: var(--ivory); font-weight: 500; }
+.gauge-anim__flecha { color: var(--oro-3); }
+@media (max-width: 600px) {
+  .factor { grid-template-columns: 4.4rem 1fr; gap: .9rem; padding: 1.2rem 1.1rem; align-items: start; }
+  .factor__pct { font-size: 2.4rem; }
+}
+
+/* ---------- Neuroventas ---------- */
+.neuro-art { position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid rgba(224, 184, 74, .22); box-shadow: 0 0 80px -20px rgba(224, 184, 74, .35), 0 40px 80px -40px #000; }
+@media (max-width: 999px) { .neuro-art { margin-top: 2.5rem; } }
+@media (min-width: 860px) { .balance--2 { grid-template-columns: repeat(2, 1fr); } }
+.balance--2 .balance__n { font-size: 1rem; letter-spacing: .04em; }
+
+/* ---------- Crédito: preguntas al dolor ---------- */
+.dolor { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.dolor > *, .dolor__lista > li { min-width: 0; }
+@media (min-width: 960px) { .dolor { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; } }
+.dolor__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.dolor__item {
+  width: 100%; display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 1rem; align-items: center; text-align: left;
+  padding: 1.1rem 1.25rem; border-radius: 14px; cursor: pointer; color: var(--ivory);
+  font-family: var(--f-display); font-size: var(--step-1); line-height: 1.25;
+  border: 1px solid rgba(224, 184, 74, .16); background: linear-gradient(180deg, #121118, #0b0b10);
+  transition: border-color .4s, box-shadow .4s, transform .4s var(--ease);
+}
+@media (hover: hover) { .dolor__item:hover { border-color: rgba(224, 184, 74, .4); transform: translateX(4px); } }
+.dolor__item.is-on { border-color: rgba(224, 184, 74, .6); box-shadow: 0 0 40px -14px rgba(224, 184, 74, .45), inset 0 1px 0 rgba(255, 244, 206, .12); }
+.dolor__check { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--f-body); font-size: 1rem; font-weight: 700;
+  border: 1px solid rgba(224, 184, 74, .45); color: #241A04; transition: background .3s; }
+.dolor__item.is-on .dolor__check { background: var(--oro-metal); box-shadow: var(--oro-canto); border-color: transparent; }
+.dolor__si { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.dolor__item.is-on .dolor__si { color: var(--oro-2); }
+@media (max-width: 560px) { .dolor__item { grid-template-columns: 30px minmax(0, 1fr); font-size: 1.08rem; padding: 1rem; } .dolor__si { display: none; } .dolor__resultado { position: static; } }
+.dolor__resultado { position: sticky; top: calc(var(--header-h) + 1rem); padding: 1.75rem; border-radius: var(--radius);
+  border: 1px solid rgba(224, 184, 74, .18); background: radial-gradient(90% 70% at 50% 0%, rgba(242, 217, 139, .08), transparent 70%), linear-gradient(180deg, #121118, #0b0b10);
+  display: grid; gap: .9rem; }
+.dolor__resultado.is-on { border-color: rgba(224, 184, 74, .5); }
+.dolor__n { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.dolor__n b { font-family: var(--f-display); font-size: 3.2rem; font-weight: 500; letter-spacing: 0; margin-right: .3rem;
+  background: var(--oro-metal-h); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold); }
+.dolor__ctas { display: flex; flex-wrap: wrap; gap: .7rem; }
+.debito { margin-top: 2rem; padding: 1.75rem 2rem; border-radius: var(--radius); border-left: 3px solid var(--oro-3);
+  background: linear-gradient(90deg, rgba(224, 184, 74, .1), transparent 70%); }
+.debito__tag { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--oro-2); }
+.debito h3 { font-family: var(--f-display); font-weight: 500; font-size: var(--step-2); margin: .5rem 0 .6rem; }
+.debito p { color: var(--ivory-2); max-width: 72ch; }
+
+/* ---------- Ajustes de ancho en celular ---------- */
+.hero__grid > * { min-width: 0; }
+/* palabras largas en Bodoni ("Comunicación") no caben a 320 px con el tamaño h1 completo */
+@media (max-width: 380px) { .h1 { font-size: clamp(2.3rem, 12.5vw, 3.1rem); } }
+/* la tarjeta 3D inclinada sobresale por la perspectiva: en celular va derecha */
+@media (max-width: 600px) { .cardx { transform: none; width: 100%; } }
+.cardx-wrap { grid-template-columns: minmax(0, 1fr); }
+.cardx-wrap > * { min-width: 0; }
+@media (min-width: 960px) { .cardx-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+@media (max-width: 600px) { .cardx__num { font-size: .95rem; letter-spacing: .08em; } }
 
 /* ---------- Entrega (/entrega) ---------- */
 .entrega-video { width: min(340px, 82vw); margin: 2.4rem auto 0; aspect-ratio: 9 / 16; border-radius: 34px; padding: 6px;

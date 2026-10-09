@@ -33,6 +33,8 @@ export function HeroFx() {
   return (
     <>
       <div className="aurora" aria-hidden="true"><i /><i /><i /></div>
+      <div className="tech-grid" aria-hidden="true" />
+      <div className="tech-scan" aria-hidden="true" />
       <div className="hero__spot" ref={spot} aria-hidden="true" />
       <GoldDust />
       <Monedas set="hero" />

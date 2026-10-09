@@ -3,11 +3,13 @@ import { GoldTitle } from "@/components/ui/Section";
 import { Socials } from "@/components/ui/Socials";
 import { contacto } from "@/content/home";
 import { site, whatsappLink } from "@/lib/site";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 /** Cierre de la home: datos de contacto y el formulario de agenda a la vista, como en el sitio original. */
 export function Contact() {
   return (
-    <section className="section section--raised" id="contacto" data-nav="Contacto" aria-labelledby="contacto-title">
+    <section className="section section--raised has-fondo" id="contacto" data-nav="Contacto" aria-labelledby="contacto-title">
+      <FondoLujo img="casa" />
       <div className="container contact">
         <div className="contact__info reveal">
           <span className="eyebrow">{contacto.eyebrow}</span>

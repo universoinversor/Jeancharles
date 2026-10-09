@@ -49,6 +49,8 @@ export const servicios = [
   { value: "mentoria", label: "Mentoría personalizada" },
   { value: "forex", label: "Forex Trading Dashboard" },
   { value: "crypto", label: "Cripto Terminal Wealth" },
+  { value: "credito", label: "Crédito optimizado (3 burós)" },
+  { value: "neuroventas", label: "Neuroventas & PNL" },
   { value: "nipponflex", label: "Nipponflex Health & Wellness" },
   { value: "conferencias", label: "Conferencia para mi empresa / evento" },
   { value: "cursos", label: "Cursos & mentorías" },

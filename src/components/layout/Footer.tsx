@@ -39,6 +39,8 @@ export function Footer() {
             <p className="footer-title">Universo JC</p>
             <ul className="footer-links" role="list">
               <li><Link href="/cursos">Cursos</Link></li>
+              <li><Link href="/credito">Crédito optimizado</Link></li>
+              <li><Link href="/neuroventas">Neuroventas & PNL</Link></li>
               <li><Link href="/crypto">Cripto Terminal</Link></li>
               <li><Link href="/forex">Forex Dashboard</Link></li>
               <li><Link href="/nipponflex">Nipponflex Health</Link></li>

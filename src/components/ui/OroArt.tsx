@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-export type OroArtKind = "cripto" | "forex" | "bio" | "mente" | "negocios" | "libro";
+export type OroArtKind = "cripto" | "forex" | "bio" | "mente" | "negocios" | "libro" | "neuro";
 
 /**
  * Ilustraciones propias en oro metálico (SVG, sin fotos de stock): monedas, velas, pulso, órbitas.
@@ -121,6 +121,22 @@ export function OroArt({ kind, className = "" }: { kind: OroArtKind; className?:
         </g>
       )}
 
+      {kind === "neuro" && (
+        <g>
+          {/* red neuronal: nodos dorados conectados, con el núcleo brillante al centro */}
+          {NEURO_LINKS.map(([a, b]) => (
+            <line key={`${a}-${b}`} x1={NEURO_NODES[a][0]} y1={NEURO_NODES[a][1]} x2={NEURO_NODES[b][0]} y2={NEURO_NODES[b][1]}
+              stroke={url("metal")} strokeOpacity=".55" strokeWidth="1.4" />
+          ))}
+          {NEURO_NODES.map(([x, y, r], i) => (
+            <circle key={i} cx={x} cy={y} r={r} fill={url("moneda")} filter={r > 9 ? url("brillo") : undefined} />
+          ))}
+          <circle cx="300" cy="225" r="54" fill="none" stroke="#FFF4CE" strokeOpacity=".35" />
+          <circle cx="300" cy="225" r="84" fill="none" stroke="#C29327" strokeOpacity=".2" strokeDasharray="3 7" />
+          <Destellos />
+        </g>
+      )}
+
       {kind === "libro" && (
         <g>
           {[-50, -25, 0, 25, 50].map((a) => (
@@ -164,3 +180,14 @@ function Destellos() {
     </g>
   );
 }
+
+/** Nodos [x, y, radio] y conexiones de la red neuronal. */
+const NEURO_NODES: [number, number, number][] = [
+  [300, 225, 26], [190, 150, 9], [410, 140, 10], [440, 300, 9], [180, 310, 10], [300, 90, 7],
+  [300, 370, 7], [90, 220, 6], [520, 220, 7], [110, 90, 5], [500, 80, 5], [520, 380, 5], [90, 380, 5],
+  [240, 60, 4], [370, 400, 4],
+];
+const NEURO_LINKS: [number, number][] = [
+  [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 7], [1, 9], [1, 5], [2, 5], [2, 8], [2, 10], [3, 8],
+  [3, 11], [3, 6], [4, 7], [4, 12], [4, 6], [5, 13], [6, 14], [1, 4], [2, 3],
+];

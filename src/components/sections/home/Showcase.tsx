@@ -4,6 +4,7 @@ import { GoldTitle, SectionHead } from "@/components/ui/Section";
 import { TradingView } from "@/components/widgets/TradingView";
 import { testimonials } from "@/content/home";
 import { OroArt } from "@/components/ui/OroArt";
+import { FondoLujo } from "@/components/ui/FondoLujo";
 
 export const TICKER_HOME = {
   symbols: [
@@ -55,7 +56,8 @@ export function Performance() {
 
 export function Testimonials() {
   return (
-    <section className="section section--line" id="testimonios" data-nav="Testimonios" aria-labelledby="testimonios-title">
+    <section className="section section--line has-fondo" id="testimonios" data-nav="Testimonios" aria-labelledby="testimonios-title">
+      <FondoLujo img="deportivo" />
       <div className="container">
         <SectionHead
           eyebrow="Resultados reales"
