@@ -66,6 +66,9 @@ Next.js 16 (App Router, `src/`) · React 19 · TypeScript · Tailwind v4 · Supa
   El movimiento del fondo es la **aurora dorada** (`.aurora`, CSS puro) + `<GoldDust>`; fondo noche `--night #05050c`.
 - Estilo: lujo extravagante y MUY visual — imágenes grandes, oro con brillo, polvo de oro (`<GoldDust>`).
   Capa en `src/styles/cinematic.css` (aurora, hero, `.crest` con reflejo, `.cinema` con escudo gigante, `.universe`).
+- Motor gráfico `<MotorGrafico />` (WebGL2 propio, sin librerías, en el layout): universo de partículas de oro
+  en 3D detrás de todo; galaxia ↔ onda según el scroll, cámara con el mouse, onda expansiva al hacer clic.
+  Por eso las secciones usan fondos traslúcidos. Se pausa en pestaña oculta; reduced-motion = un cuadro fijo.
 - Capa `src/styles/tech.css` + `<TechFx />` (en el layout): barra de progreso, tarjetas que se inclinan en 3D con luz
   bajo el cursor, esquinas HUD, destello al hacer clic, rótulos que se decodifican, piso de cuadrícula dorada
   (`.tech-grid`/`.tech-scan` en los héroes) y velocímetro digital con segmentos LED. Todo respeta reduced-motion.

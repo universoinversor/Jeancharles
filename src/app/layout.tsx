@@ -15,6 +15,7 @@ import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/allura/400.css";
 import "./globals.css";
 import { TechFx } from "@/components/app/TechFx";
+import { MotorGrafico } from "@/components/app/MotorGrafico";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body>
         <a className="skip-link" href="#main">Saltar al contenido</a>
+        <MotorGrafico />
         <div className="grain" aria-hidden="true" />
         <div className="cursor" aria-hidden="true"><div className="cursor__dot" /></div>
         <Header />
