@@ -232,6 +232,8 @@ export const EN: Record<string, string> = {
   "Explorar": "Explore",
   "Método JC": "JC Method",
   "Área de miembros": "Members area",
+  "Estrategia": "Strategy",
+  "Estrategia de contenido": "Content strategy",
   "Consultoría": "Consulting",
   "Estrategias semanales directo a tu bandeja. Sin ruido.": "Weekly strategies straight to your inbox. No noise.",
   "Correo electrónico": "Email",
