@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: site.name,
-    locale: "es_LA",
+    locale: "es_MX",
+    alternateLocale: ["en_US"],
     title: "Jean Charles | Domina tu mente. Escala tu negocio.",
     description: "Inversionista global, estratega y conferencista. Más de 10 años ayudando a personas y empresas en tres continentes.",
     images: ["/brand/logo-full.png"],
@@ -62,7 +63,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es-MX" suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
