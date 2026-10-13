@@ -45,7 +45,6 @@ export function Footer() {
               <li><Link href="/forex">Forex Dashboard</Link></li>
               <li><Link href="/nipponflex">Nipponflex Health</Link></li>
               <li><Link href="/miembros">Área de miembros</Link></li>
-              <li><Link href="/estrategia">Estrategia de contenido</Link></li>
               <li><DialogLink dialog="consulta">Consultoría</DialogLink></li>
             </ul>
           </div>

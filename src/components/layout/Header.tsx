@@ -26,7 +26,6 @@ const NAV_MOVIL_EXTRA = [
   { href: "/cursos", label: "Cursos" },
   { href: "/#journal", label: "Blog" },
   { href: "/miembros", label: "Miembros" },
-  { href: "/estrategia", label: "Estrategia" },
 ];
 
 export function Header() {

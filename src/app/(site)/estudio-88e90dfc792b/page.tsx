@@ -8,7 +8,8 @@ import { embudo, indicadores, mezcla, produccion, resumen } from "@/content/estr
 export const metadata: Metadata = {
   title: "Estrategia de contenido — 21 días",
   description: "Sistema de contenido de 21 días: pilares, calendario de guiones, teleprompter y métricas para Jean Charles Official.",
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
+  referrer: "no-referrer",
 };
 
 const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
