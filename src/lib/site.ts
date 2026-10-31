@@ -5,7 +5,7 @@
 export const site = {
   name: "Jean Charles Official",
   person: "Jean Charles",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jeancharlesofficial.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jeancharlesofficial.com",
   description:
     "Jean Charles: inversionista en mercados financieros y negocios digitales con más de 10 años de experiencia. Consultorías, cursos y conferencias para dominar tu mente y escalar tu negocio.",
   logo: "/brand/logo-full.png",

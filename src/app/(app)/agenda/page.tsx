@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { GoldTitle, PageHero } from "@/components/ui/Section";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Agenda",
-  description: "Agenda una consultoría estratégica 1:1 con Jean Charles.",
-};
+  description:
+    "Agenda una consultoría estratégica 1:1 con Jean Charles.",
+  path: "/agenda",
+});
 
 export default function AgendaPage() {
   return (

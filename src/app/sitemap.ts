@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((r) => ({
     url: `${site.url}${r}`,
     lastModified: new Date(),
+    changeFrequency: r === "/privacidad" || r === "/terminos" ? "yearly" : "weekly",
     priority: r === "" ? 1 : r === "/privacidad" || r === "/terminos" ? 0.2 : 0.8,
   }));
 }

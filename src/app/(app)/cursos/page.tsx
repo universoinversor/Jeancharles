@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { GoldTitle, PageHero } from "@/components/ui/Section";
 import { cursos } from "@/content/cursos";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Cursos & Mentorías",
-  description: "Programas de Jean Charles sobre mercados financieros, crypto, negocios digitales, mentalidad y biohacking.",
-};
+  description:
+    "Programas de Jean Charles sobre mercados financieros, crypto, negocios digitales, mentalidad y biohacking.",
+  path: "/cursos",
+});
 
 export default function CursosPage() {
   return (

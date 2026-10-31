@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- retrato y escudo locales */
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { CtaBand, GoldTitle, SectionHead } from "@/components/ui/Section";
 import { TradingView } from "@/components/widgets/TradingView";
@@ -8,10 +9,12 @@ import { whatsappLink } from "@/lib/site";
 import { SectionRail } from "@/components/ui/SectionRail";
 import { FondoLujo } from "@/components/ui/FondoLujo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Forex Dashboard — Gestión de inversiones",
-  description: "Trading de divisas, portafolio cripto, mentoría DeFi y gestión de patrimonio privado con Jean Charles. Mercados en tiempo real.",
-};
+  description:
+    "Trading de divisas, portafolio cripto, mentoría DeFi y gestión de patrimonio privado con Jean Charles. Mercados en tiempo real.",
+  path: "/forex",
+});
 
 const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 

@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-export const metadata: Metadata = { title: "Política de Privacidad", description: "Cómo Jean Charles Official recopila, usa y protege tus datos personales." };
+export const metadata: Metadata = pageMetadata({
+  title: "Política de Privacidad",
+  description:
+    "Cómo Jean Charles Official recopila, usa y protege tus datos personales.",
+  path: "/privacidad",
+});
 
 export default function Page() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { Monedas } from "@/components/ui/Monedas";
 import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Section";
@@ -11,11 +12,12 @@ import { beneficios, buros, dolor, equilibrio, factores, faqCredito, impuestos, 
 import { whatsappLink } from "@/lib/site";
 import { FondoLujo } from "@/components/ui/FondoLujo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Crédito optimizado — Tus 3 burós alineados con tus ingresos",
   description:
     "Aprende a mejorar tu puntaje en Equifax, Experian y TransUnion y a alinearlo con tus ingresos. Diagnóstico, plan y acompañamiento con Jean Charles.",
-};
+  path: "/credito",
+});
 
 const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 

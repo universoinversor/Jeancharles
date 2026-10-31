@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { OroArt } from "@/components/ui/OroArt";
@@ -8,11 +9,12 @@ import { aplicaciones, faqNeuro, formatos, neuroIntro, pilares, recorrido } from
 import { whatsappLink } from "@/lib/site";
 import { FondoLujo } from "@/components/ui/FondoLujo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Neuroventas & PNL — Comunicación que conecta, ventas que cierran",
   description:
     "Programación neurolingüística y neuroventas con Jean Charles: rapport, lenguaje, manejo de objeciones y cierre ético para ventas, liderazgo y conferencias.",
-};
+  path: "/neuroventas",
+});
 
 const d = (s: string) => ({ "--d": s }) as React.CSSProperties;
 
