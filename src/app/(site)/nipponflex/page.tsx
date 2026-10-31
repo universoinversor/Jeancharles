@@ -1,16 +1,18 @@
 /* eslint-disable @next/next/no-img-element -- imágenes locales y del distribuidor oficial */
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Section";
 import { benefits, faq, gateways, problems, products } from "@/content/nipponflex";
 import { partners, whatsappLink } from "@/lib/site";
 import { SectionRail } from "@/components/ui/SectionRail";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Nipponflex Health — La ciencia del descanso",
   description:
     "Sistemas japoneses de descanso y recuperación con FIR Power, magnetismo y Vibro Relax. Catálogo oficial E-Energy by Nipponflex USA con Jean Charles.",
-};
+  path: "/nipponflex",
+});
 
 const ICON: Record<(typeof benefits)[number]["icon"], React.ReactNode> = {
   fir: <><circle cx="12" cy="12" r="4" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" /></>,

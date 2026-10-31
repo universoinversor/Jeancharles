@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Términos de Servicio", description: "Términos y condiciones de uso del sitio Jean Charles Official." };
+export const metadata: Metadata = pageMetadata({
+  title: "Términos de Servicio",
+  description:
+    "Términos y condiciones de uso del sitio Jean Charles Official.",
+  path: "/terminos",
+});
 
 export default function Page() {
   return (

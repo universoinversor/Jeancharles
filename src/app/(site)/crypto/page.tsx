@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { DialogLink } from "@/components/ui/DialogLink";
 import { CtaBand, GoldTitle, PageHero, SectionHead } from "@/components/ui/Section";
 import { TradingView } from "@/components/widgets/TradingView";
@@ -8,10 +9,12 @@ import { SectionRail } from "@/components/ui/SectionRail";
 import { Monedas } from "@/components/ui/Monedas";
 import { FondoLujo } from "@/components/ui/FondoLujo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Cripto Terminal — Mercados en tiempo real",
-  description: "Panel de mercado en tiempo real: Bitcoin, Ethereum, Solana, sentimiento técnico y screener crypto. Curado por Jean Charles.",
-};
+  description:
+    "Panel de mercado en tiempo real: Bitcoin, Ethereum, Solana, sentimiento técnico y screener crypto. Curado por Jean Charles.",
+  path: "/crypto",
+});
 
 const QUOTES = [
   { code: "BTC", name: "Bitcoin", symbol: "BITSTAMP:BTCUSD" },
